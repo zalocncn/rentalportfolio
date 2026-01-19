@@ -1,0 +1,91 @@
+/* Base Styles - Shared across all pages */
+body { 
+    font-family: 'Inter', sans-serif; 
+}
+
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar { 
+    width: 6px; 
+}
+
+::-webkit-scrollbar-track { 
+    background: transparent; 
+}
+
+::-webkit-scrollbar-thumb { 
+    background: #e4e4e7; 
+    border-radius: 3px; 
+}
+
+::-webkit-scrollbar-thumb:hover { 
+    background: #d4d4d8; 
+}
+
+/* Subtle grid background */
+.bg-grid {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+/* Custom switch toggle */
+.toggle-checkbox:checked {
+    right: 0;
+    border-color: #10b981;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+    background-color: #10b981;
+}
+
+/* Consistent button styles */
+.btn-primary {
+    @apply h-10 px-6 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors shadow-sm shadow-emerald-200;
+}
+
+.btn-secondary {
+    @apply h-10 px-6 rounded-md bg-white border border-zinc-200 text-zinc-700 font-medium text-sm hover:bg-zinc-50 transition-colors;
+}
+
+.btn-dark {
+    @apply bg-zinc-900 text-white px-4 py-2 rounded-full hover:bg-zinc-800 hover:shadow-lg transition-all text-sm font-medium;
+}
+
+/* Card styles */
+.card {
+    @apply rounded-lg border border-zinc-100 bg-white p-4 hover:shadow-md transition-all;
+}
+
+.card-subtle {
+    @apply rounded-lg border border-zinc-100 bg-zinc-50/50 p-4;
+}
+
+/* Consistent spacing and layout */
+.container {
+    @apply max-w-6xl mx-auto px-6;
+}
+
+.container-narrow {
+    @apply max-w-4xl mx-auto px-6;
+}
+
+/* Text styles */
+.heading-1 {
+    @apply text-5xl sm:text-6xl font-medium tracking-tight text-zinc-900 leading-[1.1];
+}
+
+.heading-2 {
+    @apply text-3xl font-medium tracking-tight text-zinc-900;
+}
+
+.heading-3 {
+    @apply text-xl font-medium tracking-tight text-zinc-900;
+}
+
+.text-body {
+    @apply text-zinc-500 leading-relaxed font-light;
+}
+
+.text-small {
+    @apply text-sm text-zinc-500;
+}

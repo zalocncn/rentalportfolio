@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Residents & Leases | Rental Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <script src="js/feedback-modal.js"></script>
+    <script src="js/listing-storage.js"></script>
+</head>
+<body class="bg-white text-zinc-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen">
+
+    <!-- Top Header -->
+    <header class="fixed top-0 right-0 left-0 md:left-64 h-14 bg-white border-b border-zinc-100 z-40">
+        <div class="h-full flex items-center justify-between px-6">
+            <div class="md:hidden">
+                <button class="p-2 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:menu" width="20" class="text-zinc-600"></iconify-icon>
+                </button>
+            </div>
+            <div class="flex items-center gap-4 ml-auto">
+                <a href="set-up-residents.html" class="text-sm font-medium bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors inline-block">
+                    Set up new Residents
+                </a>
+                <div class="flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-50 rounded-md cursor-pointer transition-colors">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs font-medium">R</div>
+                    <span class="text-sm font-medium text-zinc-900 hidden sm:block">Rita</span>
+                    <iconify-icon icon="lucide:chevron-down" width="16" class="text-zinc-400"></iconify-icon>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-zinc-100 z-50 overflow-y-auto hidden md:block">
+        <div class="p-6 border-b border-zinc-100">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-emerald-600 rounded-md flex items-center justify-center text-white">
+                    <iconify-icon icon="lucide:building-2" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <span class="text-sm font-semibold tracking-tight">RENTAL MANAGER</span>
+            </a>
+        </div>
+        <nav class="p-4 space-y-1">
+            <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:layout-dashboard" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            
+            <a href="payments.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Payments</span>
+            </a>
+            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-md text-emerald-700">
+                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Residents & Leases</span>
+                <span class="flex h-2 w-2 rounded-full bg-emerald-500 ml-auto"></span>
+            </a>
+            <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Maintenance</span>
+            </a>
+            <div class="pt-4 mt-4 border-t border-zinc-100 space-y-1">
+                <a href="messages.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:mail" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Messages</span>
+                </a>
+                <a href="help.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:help-circle" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Help</span>
+                </a>
+                <div class="account-dropdown">
+                    <button class="w-full flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors" onclick="toggleAccountDropdown()">
+                        <iconify-icon icon="lucide:settings" width="18" stroke-width="1.5"></iconify-icon>
+                        <span class="text-sm font-medium">Account</span>
+                        <iconify-icon icon="lucide:chevron-down" width="14" class="text-zinc-400 ml-auto account-chevron transition-transform"></iconify-icon>
+                    </button>
+                    <div class="account-submenu hidden mt-1 ml-4 space-y-1">
+                        <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            My Account
+                        </a>
+                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Banks & Cards
+                        </a>
+                        <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Billing History
+                        </a>
+                    </div>
+                </div>
+                <a href="#" onclick="openFeedbackModal(); return false;" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:message-square" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Provide Feedback</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 pt-14 min-h-screen bg-zinc-50">
+        <div class="p-6">
+            <div class="max-w-5xl mx-auto">
+                <!-- Page Header -->
+                <div class="mb-6">
+                    <h1 class="text-3xl font-medium tracking-tight text-zinc-900 mb-6">Residents & Leases</h1>
+                    
+                    <!-- Tabs -->
+                    <div class="flex gap-6 border-b border-zinc-200 mb-6">
+                        <button class="pb-3 px-1 border-b-2 border-emerald-600 text-sm font-medium text-zinc-900">
+                            Current & Upcoming
+                        </button>
+                        <button class="pb-3 px-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
+                            Ending Soon
+                        </button>
+                        <button class="pb-3 px-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
+                            Ended
+                        </button>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="relative mb-8">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Search by address, property name, or resident" 
+                            class="w-full px-4 py-2.5 pl-10 pr-10 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                            onkeyup="filterLeases()"
+                        >
+                        <iconify-icon icon="lucide:search" width="18" class="absolute left-3 top-3 text-zinc-400"></iconify-icon>
+                    </div>
+                </div>
+
+                <!-- Leases Container -->
+                <div id="leasesContainer" class="space-y-4 mb-8">
+                    <!-- Lease entries will be loaded here dynamically -->
+                </div>
+
+                <!-- Empty State / Feature Card (shown when no residents) -->
+                <div id="emptyState" class="bg-white rounded-lg border border-zinc-200 shadow-sm p-8 md:p-12">
+                    <!-- Heading -->
+                    <h2 class="text-2xl md:text-3xl font-medium text-zinc-900 text-center mb-12">
+                        Resident Management on Rental Manager
+                    </h2>
+
+                    <!-- Features Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                        <!-- Feature 1 -->
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <iconify-icon icon="lucide:users" width="32" class="text-emerald-600"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-medium text-zinc-900 mb-2">Getting started is simple</h3>
+                            <p class="text-sm text-zinc-600 leading-relaxed">
+                                Enter a lease period and fill out resident information to begin!
+                            </p>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <iconify-icon icon="lucide:file-check" width="32" class="text-emerald-600"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-medium text-zinc-900 mb-2">Create a free lease document</h3>
+                            <p class="text-sm text-zinc-600 leading-relaxed mb-3">
+                                Creating a customized lease for you and your renters to sign online is quick and easy.
+                            </p>
+                            <a href="#" class="text-sm text-blue-600 hover:text-blue-700 underline">View sample lease</a>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <iconify-icon icon="lucide:sparkles" width="32" class="text-emerald-600"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-medium text-zinc-900 mb-2">Manage everything in one place</h3>
+                            <p class="text-sm text-zinc-600 leading-relaxed">
+                                Easily manage your residents, view upcoming payments, and upload addendums all in one place.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Learn More Link -->
+                    <div class="text-center mb-8">
+                        <a href="#" class="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700">
+                            <iconify-icon icon="lucide:info" width="16"></iconify-icon>
+                            Learn more about adding and managing residents
+                        </a>
+                    </div>
+
+                    <!-- Call to Action Button -->
+                    <div class="flex justify-center">
+                        <a href="set-up-residents.html" class="px-6 py-3 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors inline-block">
+                            Set up new Residents
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Help Button -->
+    <button class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center justify-center z-30">
+        <iconify-icon icon="lucide:help-circle" width="24"></iconify-icon>
+    </button>
+
+    <script>
+        function toggleAccountDropdown() {
+            const submenu = document.querySelector('.account-submenu');
+            const chevron = document.querySelector('.account-chevron');
+            submenu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+        }
+
+        // Calculate lease end date
+        function calculateLeaseEndDate(startDate, leaseType) {
+            if (!startDate) return '';
+            const start = new Date(startDate);
+            const end = new Date(start);
+            
+            if (leaseType === 'monthly') {
+                end.setMonth(end.getMonth() + 1);
+            } else {
+                // Fixed dates - default to 12 months
+                end.setMonth(end.getMonth() + 12);
+            }
+            
+            return formatDate(end.toISOString());
+        }
+
+        // Parse property address to extract components
+        function parsePropertyAddress(address, unit) {
+            if (!address) return { street: '', cityState: '', fullAddress: '' };
+            
+            // Check if address already contains unit information
+            const addressLower = address.toLowerCase();
+            const hasUnitInAddress = addressLower.includes('unit');
+            
+            // If address already has unit, use it as-is
+            if (hasUnitInAddress) {
+                return { 
+                    street: address.split(',')[0]?.trim() || '', 
+                    cityState: address.split(',').slice(1).join(',').trim() || '', 
+                    fullAddress: address 
+                };
+            }
+            
+            // Otherwise, construct full address with unit
+            const parts = address.split(',');
+            let street = parts[0]?.trim() || '';
+            let cityState = parts.slice(1).join(',').trim() || '';
+            
+            let fullAddress = street;
+            if (unit) {
+                fullAddress += `, Unit ${unit}`;
+            }
+            if (cityState) {
+                fullAddress += `, ${cityState}`;
+            }
+            
+            return { street, cityState, fullAddress };
+        }
+
+        // Get property ID by address
+        function getPropertyIdByAddress(address) {
+            if (!address) return null;
+            
+            const listings = ListingStorage.getAllListings();
+            
+            // Try to find exact match first
+            let property = listings.find(listing => {
+                const listingAddress = (listing.address || '').toLowerCase();
+                const searchAddress = address.toLowerCase();
+                return listingAddress === searchAddress || listingAddress.includes(searchAddress) || searchAddress.includes(listingAddress);
+            });
+            
+            // If no match, try to match by street address
+            if (!property) {
+                const streetMatch = address.match(/^([^,]+)/);
+                if (streetMatch) {
+                    const street = streetMatch[1].trim().toLowerCase();
+                    property = listings.find(listing => {
+                        const listingStreet = (listing.address || '').split(',')[0].trim().toLowerCase();
+                        return listingStreet === street || listingStreet.includes(street) || street.includes(listingStreet);
+                    });
+                }
+            }
+            
+            return property ? property.id : null;
+        }
+
+        // Format due day text
+        function getDueDayText(dueDay) {
+            if (!dueDay) return '';
+            const dayMap = {
+                '1': '1st',
+                '2': '2nd',
+                '3': '3rd',
+                '4': '4th',
+                '5': '5th',
+                '15': '15th',
+                '25': '25th',
+                'last': 'Last day'
+            };
+            return dayMap[dueDay] || `${dueDay}th`;
+        }
+
+        // Calculate total monthly rent including fees
+        function calculateTotalMonthlyRent(paymentData) {
+            if (!paymentData) return 0;
+            const monthlyRent = parseFloat(paymentData.monthlyRent || 0);
+            const feesTotal = (paymentData.monthlyFees || []).reduce((sum, fee) => sum + (parseFloat(fee.amount) || 0), 0);
+            return monthlyRent + feesTotal;
+        }
+
+        // Load and display leases
+        function loadLeases() {
+            const residents = JSON.parse(localStorage.getItem('residents') || '[]');
+            const leasesContainer = document.getElementById('leasesContainer');
+            const emptyState = document.getElementById('emptyState');
+
+            if (!leasesContainer) return;
+
+            // Hide empty state if there are residents
+            if (residents.length > 0) {
+                emptyState.style.display = 'none';
+                leasesContainer.innerHTML = '';
+
+                // Group residents by property/unit
+                const leaseGroups = {};
+                residents.forEach(resident => {
+                    const key = `${resident.property}-${resident.unit || ''}`;
+                    if (!leaseGroups[key]) {
+                        // Get propertyId if not already stored
+                        let propertyId = resident.propertyId;
+                        if (!propertyId) {
+                            propertyId = getPropertyIdByAddress(resident.property);
+                        }
+                        
+                        leaseGroups[key] = {
+                            property: resident.property,
+                            propertyId: propertyId,
+                            unit: resident.unit || '',
+                            residents: [],
+                            leaseStartDate: resident.leaseStartDate,
+                            leaseEndDate: resident.leaseEndDate,
+                            leaseType: resident.leaseType
+                        };
+                    }
+                    leaseGroups[key].residents.push(resident);
+                });
+
+                // Display each lease
+                Object.values(leaseGroups).forEach((lease, index) => {
+                    const startDate = formatDate(lease.leaseStartDate);
+                    // Use saved end date if available, otherwise calculate it
+                    const endDate = lease.leaseEndDate 
+                        ? formatDate(lease.leaseEndDate) 
+                        : calculateLeaseEndDate(lease.leaseStartDate, lease.leaseType);
+                    const today = new Date();
+                    const leaseStart = new Date(lease.leaseStartDate);
+                    const isUpcoming = leaseStart > today;
+                    const isCurrent = leaseStart <= today && (!lease.leaseEndDate || new Date(lease.leaseEndDate) >= today);
+                    const isEndingSoon = lease.leaseEndDate && new Date(lease.leaseEndDate) > today && new Date(lease.leaseEndDate) <= new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+                    
+                    // Get primary resident name (lowercase as shown in image)
+                    const primaryResident = lease.residents.find(r => r.type === 'resident') || lease.residents[0];
+                    const residentName = `${primaryResident.firstName} ${primaryResident.middleName ? primaryResident.middleName + ' ' : ''}${primaryResident.lastName}`.toLowerCase();
+
+                    // Parse address to get full formatted address
+                    const addressParts = parsePropertyAddress(lease.property, lease.unit);
+                    const fullAddress = addressParts.fullAddress || lease.property;
+
+                    // Get payment data for this property
+                    const propertyId = lease.propertyId || getPropertyIdByAddress(lease.property);
+                    const paymentData = JSON.parse(localStorage.getItem('propertyPayments') || '{}');
+                    const propertyPaymentData = propertyId ? paymentData[propertyId] : null;
+                    const hasPaymentSetup = propertyPaymentData && propertyPaymentData.setupComplete;
+                    
+                    // Format payment information
+                    let paymentInfoHtml = '';
+                    if (hasPaymentSetup) {
+                        const totalRent = calculateTotalMonthlyRent(propertyPaymentData);
+                        const dueDay = getDueDayText(propertyPaymentData.dueDay);
+                        paymentInfoHtml = `
+                            <div class="mt-2">
+                                <p class="text-sm text-zinc-600">
+                                    <span class="font-medium">$${totalRent.toLocaleString()}</span> due on the ${dueDay} of each month
+                                </p>
+                            </div>
+                        `;
+                    }
+
+                    const leaseCard = document.createElement('div');
+                    leaseCard.className = 'bg-white rounded-lg border border-zinc-200 shadow-sm p-6 hover:shadow-md transition-shadow';
+                    leaseCard.innerHTML = `
+                        <div class="flex gap-6">
+                            <!-- Property Image -->
+                            <div class="w-24 h-24 bg-zinc-100 rounded-lg overflow-hidden flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=200&h=200&fit=crop" alt="${fullAddress}" class="w-full h-full object-cover">
+                            </div>
+
+                            <!-- Lease Details -->
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h3 class="text-lg font-medium text-zinc-900 mb-1">${fullAddress}</h3>
+                                        <a href="#" class="text-sm text-blue-600 hover:text-blue-700 font-medium block mt-1">${residentName}</a>
+                                    </div>
+                                    <div class="text-right">
+                                        ${isUpcoming ? '<span class="px-2 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium border border-blue-100">UPCOMING</span>' : ''}
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <p class="text-sm text-zinc-600 mb-2">${startDate} - ${endDate}</p>
+                                    ${hasPaymentSetup ? `
+                                        ${paymentInfoHtml}
+                                        <a href="set-up-payments-step4.html?propertyId=${propertyId}" class="text-sm text-blue-600 hover:text-blue-700 mt-2 inline-block">View payment details</a>
+                                    ` : `
+                                        <a href="set-up-payments.html?propertyId=${propertyId || ''}" class="text-sm text-blue-600 hover:text-blue-700">Set up payments</a>
+                                    `}
+                                </div>
+                            </div>
+
+                            <!-- View Details Button -->
+                            <div class="flex items-end">
+                                <button class="px-4 py-2 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    leasesContainer.appendChild(leaseCard);
+                });
+            } else {
+                // Show empty state
+                emptyState.style.display = 'block';
+                leasesContainer.innerHTML = '';
+            }
+        }
+
+        // Filter leases based on search
+        function filterLeases() {
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            const leaseCards = document.querySelectorAll('#leasesContainer > div');
+            
+            leaseCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Load leases when page loads
+        document.addEventListener('DOMContentLoaded', loadLeases);
+    </script>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <!-- Backdrop with blur -->
+        <div class="fixed inset-0 bg-black/30 backdrop-blur-sm" onclick="closeFeedbackModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <!-- Close Button -->
+                <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition-colors z-10">
+                    <iconify-icon icon="lucide:x" width="24"></iconify-icon>
+                </button>
+
+                <!-- Modal Header -->
+                <div class="p-6 border-b border-zinc-200">
+                    <div class="flex items-center justify-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center">
+                            <iconify-icon icon="lucide:building-2" width="20" class="text-white"></iconify-icon>
+                        </div>
+                        <span class="text-xl font-semibold text-zinc-900">Rental Manager</span>
+                        <span class="text-xs text-zinc-500 mt-1">™</span>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <form onsubmit="submitFeedback(); return false;" class="p-6 space-y-6">
+                    <!-- Website Experience Rating -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Please rate your website experience today:</h3>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="setRating(1)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(2)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(3)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(4)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(5)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="0">
+                    </div>
+
+                    <!-- Open-ended Feedback -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Tell us about your experience. What did you like? What can we do better?</h3>
+                        <textarea 
+                            name="feedback" 
+                            rows="6" 
+                            class="w-full px-4 py-3 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+                            placeholder="Share your thoughts..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Screenshot Upload -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Want to share any reference screenshot(s)? Upload here:</h3>
+                        <p class="text-xs text-zinc-500 mb-3">
+                            File number limit: 5 | Single file size limit: 100MB | Allowed file types: Word, Excel, PPT, PDF, Image, Video, Audio
+                        </p>
+                        <div 
+                            id="fileDropZone" 
+                            class="border-2 border-dashed border-zinc-300 rounded-lg p-8 text-center cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/50 transition-colors"
+                        >
+                            <iconify-icon icon="lucide:upload" width="32" class="text-zinc-400 mx-auto mb-2"></iconify-icon>
+                            <p class="text-sm text-zinc-600">Drop files or click here to upload</p>
+                        </div>
+                        <input type="file" id="fileInput" multiple class="hidden" accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.jpg,.jpeg,.png,.gif,.mp4,.mp3,.wav">
+                        <div id="fileList" class="mt-3 space-y-2"></div>
+                    </div>
+
+                    <!-- Feedback Topic Selection -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which topic(s) is your feedback about?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="listing" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Listing</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leases" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leases</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="payments" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Payments</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leads" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leads</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="expenses" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Expenses</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="maintenance" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Maintenance</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="applications" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Applications</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="other" id="topicOther" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="topicOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- User Role Description -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which best describes you?</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="renter" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Renter</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="rental-manager" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Rental Manager</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="other" id="roleOther" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="roleOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">May we contact you for more information about your experience?</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Name:</label>
+                                <input 
+                                    type="text" 
+                                    name="name" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Email:</label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="pt-6 border-t border-zinc-200 flex items-center justify-between">
+                        <p class="text-xs text-zinc-500">Protected by reCAPTCHA: Privacy & Terms</p>
+                        <div class="flex items-center gap-3">
+                            <button 
+                                type="button" 
+                                onclick="closeFeedbackModal()" 
+                                class="px-4 py-2 rounded-md border border-zinc-200 text-zinc-700 hover:bg-zinc-50 transition-colors text-sm font-medium"
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit" 
+                                class="px-6 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition-colors text-sm font-medium flex items-center gap-2"
+                            >
+                                Submit
+                                <iconify-icon icon="lucide:arrow-right" width="16"></iconify-icon>
+                            </button>
+                        </div>
+                        <p class="text-xs text-zinc-500">Powered by Qualtrics</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

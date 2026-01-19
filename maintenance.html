@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance | Rental Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <script src="js/feedback-modal.js"></script>
+</head>
+<body class="bg-white text-zinc-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen">
+
+    <!-- Top Header -->
+    <header class="fixed top-0 right-0 left-0 md:left-64 h-14 bg-white border-b border-zinc-100 z-40">
+        <div class="h-full flex items-center justify-between px-6">
+            <div class="md:hidden">
+                <button class="p-2 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:menu" width="20" class="text-zinc-600"></iconify-icon>
+                </button>
+            </div>
+            <div class="flex items-center gap-4 ml-auto">
+                <div class="flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-50 rounded-md cursor-pointer transition-colors">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs font-medium">R</div>
+                    <span class="text-sm font-medium text-zinc-900 hidden sm:block">Rita</span>
+                    <iconify-icon icon="lucide:chevron-down" width="16" class="text-zinc-400"></iconify-icon>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-zinc-100 z-50 overflow-y-auto hidden md:block">
+        <div class="p-6 border-b border-zinc-100">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-emerald-600 rounded-md flex items-center justify-center text-white">
+                    <iconify-icon icon="lucide:building-2" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <span class="text-sm font-semibold tracking-tight">RENTAL MANAGER</span>
+            </a>
+        </div>
+        <nav class="p-4 space-y-1">
+            <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:layout-dashboard" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            
+            <a href="payments.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Payments</span>
+            </a>
+            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Residents & Leases</span>
+            </a>
+            <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-md text-emerald-700">
+                <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Maintenance</span>
+                <span class="flex h-2 w-2 rounded-full bg-emerald-500 ml-auto"></span>
+            </a>
+            <div class="pt-4 mt-4 border-t border-zinc-100 space-y-1">
+                <a href="messages.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:mail" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Messages</span>
+                </a>
+                <a href="help.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:help-circle" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Help</span>
+                </a>
+                <div class="account-dropdown">
+                    <button class="w-full flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors" onclick="toggleAccountDropdown()">
+                        <iconify-icon icon="lucide:settings" width="18" stroke-width="1.5"></iconify-icon>
+                        <span class="text-sm font-medium">Account</span>
+                        <iconify-icon icon="lucide:chevron-down" width="14" class="text-zinc-400 ml-auto account-chevron transition-transform"></iconify-icon>
+                    </button>
+                    <div class="account-submenu hidden mt-1 ml-4 space-y-1">
+                        <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            My Account
+                        </a>
+                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Banks & Cards
+                        </a>
+                        <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Billing History
+                        </a>
+                    </div>
+                </div>
+                <a href="#" onclick="openFeedbackModal(); return false;" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:message-square" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Provide Feedback</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 pt-14 min-h-screen bg-zinc-50">
+        <div class="p-6">
+            <!-- Page Header -->
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-3xl font-bold tracking-tight text-zinc-900">Maintenance</h1>
+                <a href="new-maintenance-issue.html" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-md transition-colors text-sm">
+                    New Issue
+                </a>
+            </div>
+
+            <!-- Filter and Search Bar -->
+            <div class="bg-white rounded-lg border border-zinc-200 shadow-sm p-4 mb-6">
+                <div class="flex flex-col md:flex-row gap-4 items-center">
+                    <!-- Status Toggles -->
+                    <div class="flex gap-2">
+                        <button class="status-toggle active px-4 py-2 rounded-full bg-emerald-700 text-white text-sm font-medium transition-colors">
+                            Open
+                        </button>
+                        <button class="status-toggle px-4 py-2 rounded-full bg-white border border-emerald-600 text-emerald-600 text-sm font-medium hover:bg-emerald-50 transition-colors">
+                            Closed
+                        </button>
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="flex-1 relative">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Search by address" 
+                            class="w-full px-4 py-2 pr-10 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                            oninput="handleSearch()"
+                        >
+                        <iconify-icon icon="lucide:search" width="18" class="absolute right-3 top-2.5 text-zinc-400"></iconify-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Summary and Sort -->
+            <div class="flex items-center justify-between mb-4">
+                <p id="resultsCount" class="text-sm text-zinc-600">Showing 0 Results</p>
+                <button class="flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors">
+                    <span>Sort: Last Activity</span>
+                    <iconify-icon icon="lucide:arrow-up-down" width="16"></iconify-icon>
+                </button>
+            </div>
+
+            <!-- Maintenance Issues List -->
+            <div id="maintenanceIssuesList" class="space-y-4 mb-6">
+                <!-- Issues will be loaded dynamically -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex items-center justify-center gap-2">
+                <button class="p-2 rounded-md border border-zinc-200 hover:bg-zinc-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <iconify-icon icon="lucide:chevron-left" width="16" class="text-zinc-600"></iconify-icon>
+                </button>
+                <span class="px-4 py-2 text-sm font-medium text-zinc-900">1</span>
+                <button class="p-2 rounded-md border border-zinc-200 hover:bg-zinc-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <iconify-icon icon="lucide:chevron-right" width="16" class="text-zinc-600"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Help Button -->
+    <button class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center justify-center z-30">
+        <iconify-icon icon="lucide:help-circle" width="24"></iconify-icon>
+    </button>
+
+    <script>
+        function toggleAccountDropdown() {
+            const submenu = document.querySelector('.account-submenu');
+            const chevron = document.querySelector('.account-chevron');
+            submenu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        // Status toggle functionality
+        let currentStatusFilter = 'open';
+        let searchTerm = '';
+        
+        function handleSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchTerm = searchInput.value.toLowerCase().trim();
+            loadMaintenanceIssues();
+        }
+        
+        function loadMaintenanceIssues() {
+            const issues = JSON.parse(localStorage.getItem('maintenanceIssues') || '[]');
+            const issuesList = document.getElementById('maintenanceIssuesList');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            // Filter by status
+            let filteredIssues = issues.filter(issue => {
+                if (currentStatusFilter === 'open') {
+                    return issue.status === 'open';
+                } else {
+                    return issue.status === 'closed';
+                }
+            });
+            
+            // Filter by search term
+            if (searchTerm) {
+                filteredIssues = filteredIssues.filter(issue => {
+                    const title = (issue.title || '').toLowerCase();
+                    const address = (issue.streetAddress || issue.property || '').toLowerCase();
+                    const cityState = (issue.cityState || '').toLowerCase();
+                    return title.includes(searchTerm) || address.includes(searchTerm) || cityState.includes(searchTerm);
+                });
+            }
+            
+            // Update results count
+            const count = filteredIssues.length;
+            resultsCount.textContent = `Showing ${count} Result${count !== 1 ? 's' : ''}`;
+            
+            // Clear existing issues
+            issuesList.innerHTML = '';
+            
+            if (filteredIssues.length === 0) {
+                issuesList.innerHTML = `
+                    <div class="text-center py-16">
+                        <p class="text-lg font-medium text-zinc-900 mb-2">No Matching Results</p>
+                        <p class="text-sm text-zinc-500">Your search did not return any results.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Render each issue
+            filteredIssues.forEach(issue => {
+                const issueCard = document.createElement('div');
+                issueCard.className = 'bg-white rounded-lg border border-zinc-200 shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer';
+                issueCard.onclick = function() {
+                    window.location.href = `maintenance-detail.html?id=${issue.id}`;
+                };
+                
+                const createdDate = issue.createdDate || new Date(issue.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const createdBy = issue.createdBy || 'Rita Noriega';
+                const isPrivate = issue.isPrivate !== false; // Default to true
+                const hasDescription = issue.description && issue.description.trim().length > 0;
+                const hasFiles = issue.files && issue.files.length > 0;
+                
+                issueCard.innerHTML = `
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                        <!-- Left Side - Issue Details -->
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-zinc-900 mb-2">${issue.title || 'Untitled Issue'}</h3>
+                            <div class="flex items-center gap-2 text-sm text-zinc-600 mb-2">
+                                ${isPrivate ? '<iconify-icon icon="lucide:eye" width="16" class="text-zinc-400"></iconify-icon>' : ''}
+                                <span>${isPrivate ? 'Internal private' : 'Public'} issue created on ${createdDate} by ${createdBy}${createdBy === 'Rita Noriega' ? ' (you)' : ''}</span>
+                            </div>
+                            ${hasDescription ? `<p class="text-sm text-zinc-600 mb-2 line-clamp-2">${issue.description}</p>` : ''}
+                            ${hasFiles ? `
+                                <div class="flex items-center gap-2 text-sm text-zinc-500 mt-2">
+                                    <iconify-icon icon="lucide:paperclip" width="14" class="text-zinc-400"></iconify-icon>
+                                    <span>${issue.fileCount || issue.files.length} file${(issue.fileCount || issue.files.length) !== 1 ? 's' : ''} attached</span>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <!-- Right Side - Property Address -->
+                        <div class="text-right">
+                            <p class="text-sm font-medium text-zinc-900">${issue.streetAddress || issue.property || 'No address'}</p>
+                            ${issue.cityState ? `<p class="text-sm text-zinc-600">${issue.cityState}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                issuesList.appendChild(issueCard);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusToggles = document.querySelectorAll('.status-toggle');
+            statusToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    // Remove active class from all toggles
+                    statusToggles.forEach(btn => {
+                        btn.classList.remove('active', 'bg-emerald-700', 'text-white');
+                        btn.classList.add('bg-white', 'border', 'border-emerald-600', 'text-emerald-600');
+                    });
+                    // Add active class to clicked toggle
+                    this.classList.remove('bg-white', 'border', 'border-emerald-600', 'text-emerald-600');
+                    this.classList.add('active', 'bg-emerald-700', 'text-white');
+                    
+                    // Update filter and reload
+                    currentStatusFilter = this.textContent.trim().toLowerCase();
+                    loadMaintenanceIssues();
+                });
+            });
+            
+            // Initialize with default issue if none exist
+            const existingIssues = JSON.parse(localStorage.getItem('maintenanceIssues') || '[]');
+            if (existingIssues.length === 0) {
+                const defaultIssue = {
+                    id: 'default-1',
+                    property: '214 Via Robina, San Clemente, CA 92672',
+                    streetAddress: '214 Via Robina, Unit 14',
+                    cityState: 'San Clemente, CA 92672',
+                    title: 'gutter cleaning',
+                    description: '',
+                    files: [],
+                    createdAt: new Date('2026-01-13').toISOString(),
+                    createdDate: 'Jan 13, 2026',
+                    createdBy: 'Rita Noriega',
+                    status: 'open',
+                    isPrivate: true,
+                    privateNotes: [{
+                        text: 'private details',
+                        author: 'Rita Noriega',
+                        createdAt: new Date('2026-01-13T09:10:00').toISOString(),
+                        date: 'Jan 13, 2026',
+                        time: '9:10 AM',
+                        files: []
+                    }]
+                };
+                localStorage.setItem('maintenanceIssues', JSON.stringify([defaultIssue]));
+            }
+            
+            // Load issues on page load
+            loadMaintenanceIssues();
+        });
+    </script>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <!-- Backdrop with blur -->
+        <div class="fixed inset-0 bg-black/30 backdrop-blur-sm" onclick="closeFeedbackModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <!-- Close Button -->
+                <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition-colors z-10">
+                    <iconify-icon icon="lucide:x" width="24"></iconify-icon>
+                </button>
+
+                <!-- Modal Header -->
+                <div class="p-6 border-b border-zinc-200">
+                    <div class="flex items-center justify-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center">
+                            <iconify-icon icon="lucide:building-2" width="20" class="text-white"></iconify-icon>
+                        </div>
+                        <span class="text-xl font-semibold text-zinc-900">Rental Manager</span>
+                        <span class="text-xs text-zinc-500 mt-1">™</span>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <form onsubmit="submitFeedback(); return false;" class="p-6 space-y-6">
+                    <!-- Website Experience Rating -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Please rate your website experience today:</h3>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="setRating(1)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(2)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(3)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(4)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(5)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="0">
+                    </div>
+
+                    <!-- Open-ended Feedback -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Tell us about your experience. What did you like? What can we do better?</h3>
+                        <textarea 
+                            name="feedback" 
+                            rows="6" 
+                            class="w-full px-4 py-3 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+                            placeholder="Share your thoughts..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Screenshot Upload -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Want to share any reference screenshot(s)? Upload here:</h3>
+                        <p class="text-xs text-zinc-500 mb-3">
+                            File number limit: 5 | Single file size limit: 100MB | Allowed file types: Word, Excel, PPT, PDF, Image, Video, Audio
+                        </p>
+                        <div 
+                            id="fileDropZone" 
+                            class="border-2 border-dashed border-zinc-300 rounded-lg p-8 text-center cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/50 transition-colors"
+                        >
+                            <iconify-icon icon="lucide:upload" width="32" class="text-zinc-400 mx-auto mb-2"></iconify-icon>
+                            <p class="text-sm text-zinc-600">Drop files or click here to upload</p>
+                        </div>
+                        <input type="file" id="fileInput" multiple class="hidden" accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.jpg,.jpeg,.png,.gif,.mp4,.mp3,.wav">
+                        <div id="fileList" class="mt-3 space-y-2"></div>
+                    </div>
+
+                    <!-- Feedback Topic Selection -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which topic(s) is your feedback about?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="listing" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Listing</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leases" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leases</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="payments" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Payments</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leads" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leads</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="expenses" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Expenses</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="maintenance" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Maintenance</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="applications" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Applications</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="other" id="topicOther" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="topicOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- User Role Description -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which best describes you?</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="renter" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Renter</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="rental-manager" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Rental Manager</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="other" id="roleOther" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="roleOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">May we contact you for more information about your experience?</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Name:</label>
+                                <input 
+                                    type="text" 
+                                    name="name" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Email:</label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="pt-6 border-t border-zinc-200 flex items-center justify-between">
+                        <p class="text-xs text-zinc-500">Protected by reCAPTCHA: Privacy & Terms</p>
+                        <div class="flex items-center gap-3">
+                            <button 
+                                type="button" 
+                                onclick="closeFeedbackModal()" 
+                                class="px-4 py-2 rounded-md border border-zinc-200 text-zinc-700 hover:bg-zinc-50 transition-colors text-sm font-medium"
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit" 
+                                class="px-6 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition-colors text-sm font-medium flex items-center gap-2"
+                            >
+                                Submit
+                                <iconify-icon icon="lucide:arrow-right" width="16"></iconify-icon>
+                            </button>
+                        </div>
+                        <p class="text-xs text-zinc-500">Powered by Qualtrics</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

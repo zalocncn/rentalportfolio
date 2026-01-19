@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments | Rental Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <script src="js/feedback-modal.js"></script>
+    <script src="js/listing-storage.js"></script>
+</head>
+<body class="bg-white text-zinc-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen">
+
+    <!-- Top Header -->
+    <header class="fixed top-0 right-0 left-0 md:left-64 h-14 bg-white border-b border-zinc-100 z-40">
+        <div class="h-full flex items-center justify-between px-6">
+            <div class="md:hidden">
+                <button class="p-2 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:menu" width="20" class="text-zinc-600"></iconify-icon>
+                </button>
+            </div>
+            <div class="flex items-center gap-4 ml-auto">
+                <div class="flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-50 rounded-md cursor-pointer transition-colors">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs font-medium">R</div>
+                    <span class="text-sm font-medium text-zinc-900 hidden sm:block">Rita</span>
+                    <iconify-icon icon="lucide:chevron-down" width="16" class="text-zinc-400"></iconify-icon>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-zinc-100 z-50 overflow-y-auto hidden md:block">
+        <div class="p-6 border-b border-zinc-100">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-emerald-600 rounded-md flex items-center justify-center text-white">
+                    <iconify-icon icon="lucide:building-2" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <span class="text-sm font-semibold tracking-tight">RENTAL MANAGER</span>
+            </a>
+        </div>
+        <nav class="p-4 space-y-1">
+            <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:layout-dashboard" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            
+            <a href="payments.html" class="flex items-center gap-3 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-md text-emerald-700">
+                <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Payments</span>
+                <span class="flex h-2 w-2 rounded-full bg-emerald-500 ml-auto"></span>
+            </a>
+            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Residents & Leases</span>
+            </a>
+            <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Maintenance</span>
+            </a>
+            <div class="pt-4 mt-4 border-t border-zinc-100 space-y-1">
+                <a href="messages.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:mail" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Messages</span>
+                </a>
+                <a href="help.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:help-circle" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Help</span>
+                </a>
+                <div class="account-dropdown">
+                    <button class="w-full flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors" onclick="toggleAccountDropdown()">
+                        <iconify-icon icon="lucide:settings" width="18" stroke-width="1.5"></iconify-icon>
+                        <span class="text-sm font-medium">Account</span>
+                        <iconify-icon icon="lucide:chevron-down" width="14" class="text-zinc-400 ml-auto account-chevron transition-transform"></iconify-icon>
+                    </button>
+                    <div class="account-submenu hidden mt-1 ml-4 space-y-1">
+                        <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            My Account
+                        </a>
+                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Banks & Cards
+                        </a>
+                        <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Billing History
+                        </a>
+                    </div>
+                </div>
+                <a href="#" onclick="openFeedbackModal(); return false;" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:message-square" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Provide Feedback</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 pt-14 min-h-screen bg-zinc-50">
+        <div class="p-6">
+            <div class="max-w-4xl mx-auto">
+                <!-- Page Header -->
+                <div class="mb-6 flex items-center justify-between">
+                    <h1 class="text-3xl font-medium tracking-tight text-zinc-900">Payments</h1>
+                    <button onclick="handleSetUpPayments()" class="text-sm font-medium bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors flex items-center gap-2">
+                        Set up new Residents
+                    </button>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex gap-6 border-b border-zinc-200 mb-6">
+                    <button class="pb-3 px-1 border-b-2 border-emerald-600 text-sm font-medium text-zinc-900">
+                        Current & Upcoming
+                    </button>
+                    <button class="pb-3 px-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
+                        Ending Soon
+                    </button>
+                    <button class="pb-3 px-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
+                        Ended
+                    </button>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="relative mb-8">
+                    <input 
+                        type="text" 
+                        id="searchInput"
+                        placeholder="Search by address, property name, or resident" 
+                        class="w-full px-4 py-2.5 pl-10 pr-10 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                        onkeyup="filterPayments()"
+                    >
+                    <iconify-icon icon="lucide:search" width="18" class="absolute left-3 top-3 text-zinc-400"></iconify-icon>
+                </div>
+
+                <!-- Payments Container -->
+                <div id="paymentsContainer" class="space-y-4 mb-8">
+                    <!-- Payment entries will be loaded here dynamically -->
+                </div>
+
+                <!-- Payments Setup Card (shown when no payments) -->
+                <div id="emptyState" class="bg-white rounded-lg border border-zinc-200 shadow-sm p-8 md:p-12">
+                    <!-- Icon -->
+                    <div class="flex justify-center mb-6">
+                        <div class="relative">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-lg flex items-center justify-center">
+                                <iconify-icon icon="lucide:credit-card" width="32" class="text-emerald-600"></iconify-icon>
+                            </div>
+                            <div class="absolute -right-2 -bottom-2 w-12 h-12 bg-emerald-200 rounded-lg flex items-center justify-center opacity-80">
+                                <iconify-icon icon="lucide:credit-card" width="24" class="text-emerald-700"></iconify-icon>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Heading -->
+                    <h2 class="text-2xl md:text-3xl font-medium text-zinc-900 text-center mb-8">
+                        Easy Payments For You and Your Renters
+                    </h2>
+
+                    <!-- Features List -->
+                    <div class="space-y-6 mb-8">
+                        <!-- Feature 1: 100% Free -->
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <iconify-icon icon="lucide:dollar-sign" width="24" class="text-emerald-600"></iconify-icon>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-medium text-zinc-900 mb-1">100% Free</h3>
+                                <p class="text-sm text-zinc-600 leading-relaxed">
+                                    Receive rent, security deposits, and one-time payments, and it's always free for you.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 2: Bank-Level Security -->
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <iconify-icon icon="lucide:lock" width="24" class="text-emerald-600"></iconify-icon>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-medium text-zinc-900 mb-1">Bank-Level Security</h3>
+                                <p class="text-sm text-zinc-600 leading-relaxed">
+                                    Your data, privacy and transactions are protected with industry-leading security measures.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 3: Works With Existing Renters -->
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <iconify-icon icon="lucide:users" width="24" class="text-emerald-600"></iconify-icon>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-medium text-zinc-900 mb-1">Works With Existing Renters</h3>
+                                <p class="text-sm text-zinc-600 leading-relaxed">
+                                    All you need to start collecting rent from your existing renters is their email address.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action Button -->
+                    <div class="flex justify-center mb-6">
+                        <button onclick="handleSetUpPayments()" class="px-6 py-3 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors">
+                            Set Up Payments
+                        </button>
+                    </div>
+
+                    <!-- Learn More Link -->
+                    <div class="text-center">
+                        <a href="#" class="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-emerald-600 transition-colors">
+                            <iconify-icon icon="lucide:info" width="16"></iconify-icon>
+                            Learn more about accepting payments with Rental Manager
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Help Button -->
+    <button class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center justify-center z-30">
+        <iconify-icon icon="lucide:help-circle" width="24"></iconify-icon>
+    </button>
+
+    <script>
+        function toggleAccountDropdown() {
+            const submenu = document.querySelector('.account-submenu');
+            const chevron = document.querySelector('.account-chevron');
+            submenu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function handleSetUpPayments() {
+            // Redirect to set up residents page
+            window.location.href = 'set-up-residents.html';
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString;
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // Load and display payments
+        function loadPayments() {
+            const residents = JSON.parse(localStorage.getItem('residents') || '[]');
+            const paymentData = JSON.parse(localStorage.getItem('propertyPayments') || '{}');
+            const paymentsContainer = document.getElementById('paymentsContainer');
+            const emptyState = document.getElementById('emptyState');
+
+            if (!paymentsContainer) return;
+
+            // Filter residents that have payment setups
+            const residentsWithPayments = residents.filter(resident => {
+                const propertyId = getPropertyIdByAddress(resident.property);
+                return propertyId && paymentData[propertyId] && paymentData[propertyId].setupComplete;
+            });
+
+            // Hide empty state if there are payments
+            if (residentsWithPayments.length > 0) {
+                emptyState.style.display = 'none';
+                paymentsContainer.innerHTML = '';
+
+                // Group residents by property/unit
+                const paymentGroups = {};
+                residentsWithPayments.forEach(resident => {
+                    const key = `${resident.property}-${resident.unit}`;
+                    if (!paymentGroups[key]) {
+                        paymentGroups[key] = {
+                            property: resident.property,
+                            unit: resident.unit,
+                            residents: [],
+                            leaseStartDate: resident.leaseStartDate,
+                            leaseEndDate: resident.leaseEndDate,
+                            propertyId: getPropertyIdByAddress(resident.property)
+                        };
+                    }
+                    paymentGroups[key].residents.push(resident);
+                });
+
+                // Display each payment setup
+                Object.values(paymentGroups).forEach((group) => {
+                    const paymentInfo = paymentData[group.propertyId];
+                    const primaryResident = group.residents.find(r => r.type === 'resident') || group.residents[0];
+                    const residentName = `${primaryResident.firstName} ${primaryResident.middleName ? primaryResident.middleName + ' ' : ''}${primaryResident.lastName}`.toLowerCase();
+                    
+                    const today = new Date();
+                    const leaseStart = new Date(group.leaseStartDate);
+                    const isUpcoming = leaseStart > today;
+                    
+                    // Format property address
+                    const propertyAddress = group.property.includes('Via Robina') 
+                        ? '214 Via Robina, Unit 14' 
+                        : group.property;
+                    const cityState = group.property.includes('San Clemente') || group.property.includes('Via Robina')
+                        ? 'San Clemente, CA 92672'
+                        : '';
+
+                    // Get property image
+                    const property = ListingStorage.getListingById(group.propertyId);
+                    const propertyImage = property && property.unit && property.unit.photos && property.unit.photos.length > 0
+                        ? property.unit.photos[0].dataUrl
+                        : 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=200&h=200&fit=crop';
+
+                    const paymentCard = document.createElement('div');
+                    paymentCard.className = 'bg-white rounded-lg border border-zinc-200 shadow-sm p-6 hover:shadow-md transition-shadow';
+                    paymentCard.innerHTML = `
+                        <div class="flex gap-4">
+                            <!-- Property Image -->
+                            <div class="w-24 h-24 bg-zinc-100 rounded-lg overflow-hidden flex-shrink-0">
+                                <img src="${propertyImage}" alt="${propertyAddress}" class="w-full h-full object-cover">
+                            </div>
+
+                            <!-- Payment Details -->
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h3 class="text-lg font-medium text-zinc-900 mb-1">${propertyAddress}</h3>
+                                        <p class="text-sm text-zinc-500 mb-2">${cityState}</p>
+                                        ${isUpcoming ? `<span class="text-xs text-zinc-500 mb-1 block">${group.residents.length} Upcoming</span>` : ''}
+                                    </div>
+                                    <div class="text-right">
+                                        ${isUpcoming ? '<span class="px-2 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium border border-blue-100">UPCOMING</span>' : ''}
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <a href="#" class="text-sm text-blue-600 hover:text-blue-700 font-medium">${residentName}</a>
+                                    <p class="text-sm text-zinc-600 mt-1">${formatDate(group.leaseStartDate)} - ${formatDate(group.leaseEndDate)}</p>
+                                    <a href="set-up-payments.html?propertyId=${group.propertyId}" class="text-sm text-blue-600 hover:text-blue-700 mt-2 inline-block">Set up payments</a>
+                                </div>
+                            </div>
+
+                            <!-- View Details Button -->
+                            <div class="flex flex-col items-end justify-start">
+                                <button onclick="viewPaymentDetails('${group.propertyId}')" class="px-4 py-2 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    paymentsContainer.appendChild(paymentCard);
+                });
+            } else {
+                emptyState.style.display = 'block';
+            }
+        }
+
+        // Get property ID by address
+        function getPropertyIdByAddress(address) {
+            if (!address) return null;
+            
+            const listings = ListingStorage.getAllListings();
+            
+            // Try to find exact match first
+            let property = listings.find(listing => {
+                const listingAddress = (listing.address || '').toLowerCase();
+                const searchAddress = address.toLowerCase();
+                return listingAddress === searchAddress || listingAddress.includes(searchAddress) || searchAddress.includes(listingAddress);
+            });
+            
+            // If no match, try to match by street address
+            if (!property) {
+                const streetMatch = address.match(/^([^,]+)/);
+                if (streetMatch) {
+                    const street = streetMatch[1].trim().toLowerCase();
+                    property = listings.find(listing => {
+                        const listingStreet = (listing.address || '').split(',')[0].trim().toLowerCase();
+                        return listingStreet === street || listingStreet.includes(street) || street.includes(listingStreet);
+                    });
+                }
+            }
+            
+            return property ? property.id : null;
+        }
+
+        // Filter payments
+        function filterPayments() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('#paymentsContainer > div');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // View payment details
+        function viewPaymentDetails(propertyId) {
+            window.location.href = `set-up-payments-step4.html?propertyId=${propertyId}`;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadPayments);
+    </script>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <!-- Backdrop with blur -->
+        <div class="fixed inset-0 bg-black/30 backdrop-blur-sm" onclick="closeFeedbackModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <!-- Close Button -->
+                <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition-colors z-10">
+                    <iconify-icon icon="lucide:x" width="24"></iconify-icon>
+                </button>
+
+                <!-- Modal Header -->
+                <div class="p-6 border-b border-zinc-200">
+                    <div class="flex items-center justify-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center">
+                            <iconify-icon icon="lucide:building-2" width="20" class="text-white"></iconify-icon>
+                        </div>
+                        <span class="text-xl font-semibold text-zinc-900">Rental Manager</span>
+                        <span class="text-xs text-zinc-500 mt-1">™</span>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <form onsubmit="submitFeedback(); return false;" class="p-6 space-y-6">
+                    <!-- Website Experience Rating -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Please rate your website experience today:</h3>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="setRating(1)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(2)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(3)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(4)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(5)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="0">
+                    </div>
+
+                    <!-- Open-ended Feedback -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Tell us about your experience. What did you like? What can we do better?</h3>
+                        <textarea 
+                            name="feedback" 
+                            rows="6" 
+                            class="w-full px-4 py-3 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+                            placeholder="Share your thoughts..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Screenshot Upload -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Want to share any reference screenshot(s)? Upload here:</h3>
+                        <p class="text-xs text-zinc-500 mb-3">
+                            File number limit: 5 | Single file size limit: 100MB | Allowed file types: Word, Excel, PPT, PDF, Image, Video, Audio
+                        </p>
+                        <div 
+                            id="fileDropZone" 
+                            class="border-2 border-dashed border-zinc-300 rounded-lg p-8 text-center cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/50 transition-colors"
+                        >
+                            <iconify-icon icon="lucide:upload" width="32" class="text-zinc-400 mx-auto mb-2"></iconify-icon>
+                            <p class="text-sm text-zinc-600">Drop files or click here to upload</p>
+                        </div>
+                        <input type="file" id="fileInput" multiple class="hidden" accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.jpg,.jpeg,.png,.gif,.mp4,.mp3,.wav">
+                        <div id="fileList" class="mt-3 space-y-2"></div>
+                    </div>
+
+                    <!-- Feedback Topic Selection -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which topic(s) is your feedback about?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="listing" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Listing</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leases" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leases</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="payments" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Payments</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leads" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leads</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="expenses" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Expenses</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="maintenance" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Maintenance</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="applications" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Applications</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="other" id="topicOther" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="topicOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- User Role Description -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which best describes you?</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="renter" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Renter</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="rental-manager" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Rental Manager</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="other" id="roleOther" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="roleOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">May we contact you for more information about your experience?</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Name:</label>
+                                <input 
+                                    type="text" 
+                                    name="name" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Email:</label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="pt-6 border-t border-zinc-200 flex items-center justify-between">
+                        <p class="text-xs text-zinc-500">Protected by reCAPTCHA: Privacy & Terms</p>
+                        <div class="flex items-center gap-3">
+                            <button 
+                                type="button" 
+                                onclick="closeFeedbackModal()" 
+                                class="px-4 py-2 rounded-md border border-zinc-200 text-zinc-700 hover:bg-zinc-50 transition-colors text-sm font-medium"
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit" 
+                                class="px-6 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition-colors text-sm font-medium flex items-center gap-2"
+                            >
+                                Submit
+                                <iconify-icon icon="lucide:arrow-right" width="16"></iconify-icon>
+                            </button>
+                        </div>
+                        <p class="text-xs text-zinc-500">Powered by Qualtrics</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Rental Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <script src="js/feedback-modal.js"></script>
+</head>
+<body class="bg-white text-zinc-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen">
+
+    <!-- Top Header -->
+    <header class="fixed top-0 right-0 left-0 md:left-64 h-14 bg-white border-b border-zinc-100 z-40">
+        <div class="h-full flex items-center justify-between px-6">
+            <div class="md:hidden">
+                <button class="p-2 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:menu" width="20" class="text-zinc-600"></iconify-icon>
+                </button>
+            </div>
+            <div class="flex items-center gap-4 ml-auto">
+                <button id="saveSettingsButton" class="text-sm font-medium bg-zinc-300 text-zinc-500 px-4 py-2 rounded-md cursor-not-allowed transition-colors" disabled>
+                    Save Settings
+                </button>
+                <div class="flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-50 rounded-md cursor-pointer transition-colors">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs font-medium">R</div>
+                    <span class="text-sm font-medium text-zinc-900 hidden sm:block">Rita</span>
+                    <iconify-icon icon="lucide:chevron-down" width="16" class="text-zinc-400"></iconify-icon>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-zinc-100 z-50 overflow-y-auto hidden md:block">
+        <div class="p-6 border-b border-zinc-100">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-emerald-600 rounded-md flex items-center justify-center text-white">
+                    <iconify-icon icon="lucide:building-2" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <span class="text-sm font-semibold tracking-tight">RENTAL MANAGER</span>
+            </a>
+        </div>
+        <nav class="p-4 space-y-1">
+            <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:layout-dashboard" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            
+            <a href="payments.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Payments</span>
+            </a>
+            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Residents & Leases</span>
+            </a>
+            <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Maintenance</span>
+            </a>
+            <div class="pt-4 mt-4 border-t border-zinc-100 space-y-1">
+                <a href="messages.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:mail" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Messages</span>
+                </a>
+                <a href="help.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:help-circle" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Help</span>
+                </a>
+                <div class="account-dropdown">
+                    <button class="w-full flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors" onclick="toggleAccountDropdown()">
+                        <iconify-icon icon="lucide:settings" width="18" stroke-width="1.5"></iconify-icon>
+                        <span class="text-sm font-medium">Account</span>
+                        <iconify-icon icon="lucide:chevron-up" width="14" class="text-zinc-400 ml-auto account-chevron transition-transform"></iconify-icon>
+                    </button>
+                    <div class="account-submenu mt-1 ml-4 space-y-1">
+                        <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-md text-emerald-700 text-sm">
+                            <span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                            My Account
+                        </a>
+                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Banks & Cards
+                        </a>
+                        <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Billing History
+                        </a>
+                    </div>
+                </div>
+                <a href="#" onclick="openFeedbackModal(); return false;" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:message-square" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Provide Feedback</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 pt-14 min-h-screen bg-zinc-50">
+        <div class="p-6">
+            <div class="max-w-4xl mx-auto">
+                <!-- Page Header -->
+                <h1 class="text-3xl font-medium tracking-tight text-zinc-900 mb-8">My Account</h1>
+
+                <!-- Tabs -->
+                <div class="border-b border-zinc-200 mb-6">
+                    <div class="flex gap-8">
+                        <button class="pb-3 px-1 border-b-2 border-emerald-600 text-sm font-medium text-zinc-900" onclick="switchTab('account')">
+                            Account
+                        </button>
+                        <button class="pb-3 px-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors" onclick="switchTab('notifications')">
+                            Notification Preferences
+                        </button>
+                        <button class="pb-3 px-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors" onclick="switchTab('messages')">
+                            Message Preferences
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Account Tab Content -->
+                <div id="accountTab" class="space-y-6">
+                    <!-- Communication Language Preference Section -->
+                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-medium text-zinc-900">Communication Language Preference</h2>
+                            <iconify-icon icon="lucide:chevron-down" width="20" class="text-zinc-400"></iconify-icon>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="language" value="english" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500" checked>
+                                <span class="text-sm text-zinc-700">English</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="language" value="spanish" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Español</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Role Section -->
+                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-medium text-zinc-900">Role</h2>
+                            <iconify-icon icon="lucide:chevron-down" width="20" class="text-zinc-400"></iconify-icon>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="role" value="renter" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Renter</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="role" value="manager" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500" checked>
+                                <span class="text-sm text-zinc-700">Rental Manager (Property Owner, Manager or Broker)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Personal Information Section -->
+                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-medium text-zinc-900">Personal Information</h2>
+                            <iconify-icon icon="lucide:chevron-down" width="20" class="text-zinc-400"></iconify-icon>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-zinc-900 mb-2">First Name</label>
+                                    <input type="text" value="Rita" class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-zinc-900 mb-2">Last Name</label>
+                                    <input type="text" value="Noriega" class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-900 mb-2">Mobile Phone Number <span class="text-zinc-400 font-normal">(Optional)</span></label>
+                                <input type="tel" value="(828) 938-3892" class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-900 mb-2">Address <span class="text-zinc-400 font-normal">(Optional)</span></label>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-zinc-900 mb-2">Country</label>
+                                        <select class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                            <option>United States</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <input type="text" value="9018 Balboa blvd 146" class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-zinc-900 mb-2">Apt, Suite, Unit, Building, Floor, etc.</label>
+                                        <input type="text" class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-zinc-900 mb-2">City</label>
+                                            <input type="text" value="Northridge" class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-zinc-900 mb-2">State</label>
+                                            <select class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                                <option>CA</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-zinc-900 mb-2">Zip</label>
+                                            <input type="text" value="91325" class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google & Apple Connect Section -->
+                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-medium text-zinc-900">Google & Apple Connect</h2>
+                            <iconify-icon icon="lucide:chevron-down" width="20" class="text-zinc-400"></iconify-icon>
+                        </div>
+                        <p class="text-sm text-zinc-600 mb-4">
+                            You may disconnect your Rental Manager account from Google or Apple by clicking on the disconnect button below.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <button class="px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 transition-colors flex items-center gap-2">
+                                <iconify-icon icon="lucide:globe" width="18"></iconify-icon>
+                                Disconnect from Google
+                            </button>
+                            <button class="px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 transition-colors flex items-center gap-2">
+                                <iconify-icon icon="lucide:apple" width="18"></iconify-icon>
+                                Sign in with Apple
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Login & Security Section -->
+                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-medium text-zinc-900">Login & Security</h2>
+                            <iconify-icon icon="lucide:chevron-down" width="20" class="text-zinc-400"></iconify-icon>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-900 mb-2">User ID</label>
+                                <p class="text-sm text-zinc-600 font-mono">3c0a9546-8a9d-4df6-e323-000001643e78</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-900 mb-2">Update your email</label>
+                                <div class="flex gap-2">
+                                    <input type="email" value="zalocn@gmail.com" class="flex-1 px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                    <button class="px-4 py-2 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-900 mb-2">Update your password</label>
+                                <div class="flex gap-2">
+                                    <input type="password" value="******" class="flex-1 px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                    <button class="px-4 py-2 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Logins Section -->
+                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-medium text-zinc-900">Recent Logins</h2>
+                            <iconify-icon icon="lucide:chevron-down" width="20" class="text-zinc-400"></iconify-icon>
+                        </div>
+                        <p class="text-sm text-zinc-600 mb-4">Your five most recent logins.</p>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-zinc-200">
+                                        <th class="text-left py-3 px-4 text-sm font-medium text-zinc-900">Device</th>
+                                        <th class="text-left py-3 px-4 text-sm font-medium text-zinc-900">Date</th>
+                                        <th class="text-left py-3 px-4 text-sm font-medium text-zinc-900">Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-zinc-100">
+                                        <td class="py-3 px-4 text-sm text-zinc-700">MacOS</td>
+                                        <td class="py-3 px-4 text-sm text-zinc-700">Jan 12, 2026 5:15:52 PM (EST)</td>
+                                        <td class="py-3 px-4 text-sm text-zinc-700">Santiago, 2800:200:e480:204:8d</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4">
+                            <button class="px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 transition-colors text-sm font-medium">
+                                Log Out Everywhere
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Account Data Section -->
+                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-medium text-zinc-900">Account Data</h2>
+                            <iconify-icon icon="lucide:chevron-down" width="20" class="text-zinc-400"></iconify-icon>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-sm font-medium text-zinc-900 mb-2">Deactivate My Account</h3>
+                                <p class="text-sm text-zinc-600 mb-4">
+                                    By deactivating your account, you will no longer be able to access your account or sign in to Rental Manager.
+                                </p>
+                                <button class="px-4 py-2 rounded-md bg-red-600 text-white font-medium text-sm hover:bg-red-700 transition-colors">
+                                    Deactivate Account
+                                </button>
+                            </div>
+                            <div class="border-t border-zinc-200 pt-6">
+                                <h3 class="text-sm font-medium text-zinc-900 mb-2">Personal Data</h3>
+                                <p class="text-sm text-zinc-600 mb-2">
+                                    At Rental Manager, protecting your privacy is important to us. You can use these tools to view data you provided to our site.
+                                </p>
+                                <p class="text-sm text-zinc-600 mb-4">
+                                    If you are a California resident you have certain additional rights; <a href="#" class="text-blue-600 hover:text-blue-700 underline">click here</a> to view these rights.
+                                </p>
+                                <p class="text-sm text-zinc-600 mb-2">View what is stored on Rental Manager.</p>
+                                <a href="#" class="text-sm text-blue-600 hover:text-blue-700 underline">Download.CSV</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Preferences Tab Content -->
+                <div id="notificationsTab" class="hidden space-y-6">
+                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
+                        <h2 class="text-lg font-medium text-zinc-900 mb-4">Notification Preferences</h2>
+                        <p class="text-sm text-zinc-600 mb-6">How do you want to hear from us?</p>
+                        
+                        <!-- Communication Channels -->
+                        <div class="flex gap-6 mb-8">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
+                                <iconify-icon icon="lucide:message-square" width="20" class="text-zinc-600"></iconify-icon>
+                                <span class="text-sm text-zinc-700">SMS</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500" checked>
+                                <iconify-icon icon="lucide:mail" width="20" class="text-zinc-600"></iconify-icon>
+                                <span class="text-sm text-zinc-700">Email</span>
+                            </label>
+                        </div>
+
+                        <!-- Inbox Section -->
+                        <div class="border-t border-zinc-200 pt-6 mb-6">
+                            <h3 class="text-sm font-medium text-zinc-900 mb-4">Inbox</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div>
+                                            <p class="text-sm font-medium text-zinc-900">Maintenance Issues</p>
+                                            <p class="text-sm text-zinc-600">New maintenance issues and activity updates</p>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <label class="flex items-center gap-2 cursor-pointer">
+                                                <input type="radio" name="maintenanceIssues" value="off" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                                                <span class="text-sm text-zinc-700">Off</span>
+                                            </label>
+                                            <label class="flex items-center gap-2 cursor-pointer">
+                                                <input type="radio" name="maintenanceIssues" value="on" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500" checked>
+                                                <span class="text-sm text-zinc-700">On</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Properties and Listings Section -->
+                        <div class="border-t border-zinc-200 pt-6 mb-6">
+                            <h3 class="text-sm font-medium text-zinc-900 mb-4">Properties and Listings</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div>
+                                            <p class="text-sm font-medium text-zinc-900">Property Reviews</p>
+                                            <p class="text-sm text-zinc-600">New reviews of my property</p>
+                                        </div>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rental Search Section -->
+                        <div class="border-t border-zinc-200 pt-6 mb-6">
+                            <h3 class="text-sm font-medium text-zinc-900 mb-4">Rental Search</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div>
+                                            <p class="text-sm font-medium text-zinc-900">Saved Searches</p>
+                                            <p class="text-sm text-zinc-600">New properties that fit my saved searches</p>
+                                        </div>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Favorited Rentals Section -->
+                        <div class="border-t border-zinc-200 pt-6 mb-6">
+                            <h3 class="text-sm font-medium text-zinc-900 mb-4">Favorited Rentals</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div>
+                                            <p class="text-sm font-medium text-zinc-900">Updates to rentals I've favorited</p>
+                                        </div>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
+                                        </label>
+                                    </div>
+                                    <div class="mt-3">
+                                        <input type="text" value="Immediately" disabled class="w-full md:w-48 px-4 py-2 rounded-md border border-zinc-200 bg-zinc-100 text-zinc-500 cursor-not-allowed">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Disclaimer -->
+                        <div class="border-t border-zinc-200 pt-6">
+                            <p class="text-sm text-zinc-600">
+                                By selecting SMS, you agree to receive service and informational text messages from Rental Manager and our partners and agree to our <a href="#" class="text-blue-600 hover:text-blue-700 underline">Terms of Service</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Preferences Tab Content -->
+                <div id="messagesTab" class="hidden space-y-6">
+                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
+                        <!-- Messaging Section -->
+                        <div class="mb-8">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <h2 class="text-lg font-medium text-zinc-900 mb-2">Messaging</h2>
+                                    <p class="text-sm text-zinc-600">
+                                        When enabled, the 'Send Message' buttons on your listing detail pages routes inquiries directly to your Rental Manager Messaging inbox.
+                                    </p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer ml-4">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-emerald-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Unread Message Notifications Section -->
+                        <div class="border-t border-zinc-200 pt-6">
+                            <h2 class="text-lg font-medium text-zinc-900 mb-6">Unread Message Notifications</h2>
+                            
+                            <div class="space-y-6">
+                                <!-- Email -->
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-zinc-900 mb-1">Email</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer ml-4">
+                                        <input type="checkbox" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-emerald-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                                    </label>
+                                </div>
+
+                                <!-- Push Notification -->
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-zinc-900 mb-1">Push Notification</p>
+                                        <p class="text-sm text-zinc-500">Coming soon!</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-not-allowed ml-4 opacity-50">
+                                        <input type="checkbox" class="sr-only peer" disabled>
+                                        <div class="w-11 h-6 bg-zinc-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                    </label>
+                                </div>
+
+                                <!-- SMS -->
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-zinc-900 mb-1">SMS</p>
+                                        <p class="text-sm text-zinc-500">Coming soon!</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-not-allowed ml-4 opacity-50">
+                                        <input type="checkbox" class="sr-only peer" disabled>
+                                        <div class="w-11 h-6 bg-zinc-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Help Button -->
+    <button class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center justify-center z-30">
+        <iconify-icon icon="lucide:help-circle" width="24"></iconify-icon>
+    </button>
+
+    <script>
+        function toggleAccountDropdown() {
+            const submenu = document.querySelector('.account-submenu');
+            const chevron = document.querySelector('.account-chevron');
+            submenu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('accountTab').classList.add('hidden');
+            document.getElementById('notificationsTab').classList.add('hidden');
+            document.getElementById('messagesTab').classList.add('hidden');
+            
+            // Remove active styling from all tab buttons
+            const tabButtons = document.querySelectorAll('[onclick^="switchTab"]');
+            tabButtons.forEach(btn => {
+                btn.classList.remove('border-b-2', 'border-emerald-600', 'text-zinc-900');
+                btn.classList.add('text-zinc-500');
+            });
+            
+            // Show selected tab
+            if (tabName === 'account') {
+                document.getElementById('accountTab').classList.remove('hidden');
+                tabButtons[0].classList.add('border-b-2', 'border-emerald-600', 'text-zinc-900');
+                tabButtons[0].classList.remove('text-zinc-500');
+            } else if (tabName === 'notifications') {
+                document.getElementById('notificationsTab').classList.remove('hidden');
+                tabButtons[1].classList.add('border-b-2', 'border-emerald-600', 'text-zinc-900');
+                tabButtons[1].classList.remove('text-zinc-500');
+            } else if (tabName === 'messages') {
+                document.getElementById('messagesTab').classList.remove('hidden');
+                tabButtons[2].classList.add('border-b-2', 'border-emerald-600', 'text-zinc-900');
+                tabButtons[2].classList.remove('text-zinc-500');
+            }
+        }
+
+        // Enable Save Settings button when form changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const formInputs = document.querySelectorAll('input, select, textarea');
+            const saveButton = document.getElementById('saveSettingsButton');
+            
+            function enableSaveButton() {
+                saveButton.disabled = false;
+                saveButton.classList.remove('bg-zinc-300', 'text-zinc-500', 'cursor-not-allowed');
+                saveButton.classList.add('bg-emerald-600', 'text-white', 'hover:bg-emerald-700', 'cursor-pointer');
+            }
+            
+            formInputs.forEach(input => {
+                // Skip disabled inputs
+                if (input.disabled) return;
+                
+                input.addEventListener('change', enableSaveButton);
+                input.addEventListener('input', enableSaveButton);
+            });
+        });
+    </script>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <!-- Backdrop with blur -->
+        <div class="fixed inset-0 bg-black/30 backdrop-blur-sm" onclick="closeFeedbackModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <!-- Close Button -->
+                <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition-colors z-10">
+                    <iconify-icon icon="lucide:x" width="24"></iconify-icon>
+                </button>
+
+                <!-- Modal Header -->
+                <div class="p-6 border-b border-zinc-200">
+                    <div class="flex items-center justify-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center">
+                            <iconify-icon icon="lucide:building-2" width="20" class="text-white"></iconify-icon>
+                        </div>
+                        <span class="text-xl font-semibold text-zinc-900">Rental Manager</span>
+                        <span class="text-xs text-zinc-500 mt-1">™</span>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <form onsubmit="submitFeedback(); return false;" class="p-6 space-y-6">
+                    <!-- Website Experience Rating -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Please rate your website experience today:</h3>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="setRating(1)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(2)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(3)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(4)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(5)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="0">
+                    </div>
+
+                    <!-- Open-ended Feedback -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Tell us about your experience. What did you like? What can we do better?</h3>
+                        <textarea 
+                            name="feedback" 
+                            rows="6" 
+                            class="w-full px-4 py-3 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+                            placeholder="Share your thoughts..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Screenshot Upload -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Want to share any reference screenshot(s)? Upload here:</h3>
+                        <p class="text-xs text-zinc-500 mb-3">
+                            File number limit: 5 | Single file size limit: 100MB | Allowed file types: Word, Excel, PPT, PDF, Image, Video, Audio
+                        </p>
+                        <div 
+                            id="fileDropZone" 
+                            class="border-2 border-dashed border-zinc-300 rounded-lg p-8 text-center cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/50 transition-colors"
+                        >
+                            <iconify-icon icon="lucide:upload" width="32" class="text-zinc-400 mx-auto mb-2"></iconify-icon>
+                            <p class="text-sm text-zinc-600">Drop files or click here to upload</p>
+                        </div>
+                        <input type="file" id="fileInput" multiple class="hidden" accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.jpg,.jpeg,.png,.gif,.mp4,.mp3,.wav">
+                        <div id="fileList" class="mt-3 space-y-2"></div>
+                    </div>
+
+                    <!-- Feedback Topic Selection -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which topic(s) is your feedback about?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="listing" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Listing</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leases" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leases</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="payments" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Payments</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leads" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leads</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="expenses" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Expenses</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="maintenance" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Maintenance</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="applications" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Applications</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="other" id="topicOther" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="topicOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- User Role Description -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which best describes you?</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="renter" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Renter</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="rental-manager" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Rental Manager</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="other" id="roleOther" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="roleOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">May we contact you for more information about your experience?</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Name:</label>
+                                <input 
+                                    type="text" 
+                                    name="name" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Email:</label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="pt-6 border-t border-zinc-200 flex items-center justify-between">
+                        <p class="text-xs text-zinc-500">Protected by reCAPTCHA: Privacy & Terms</p>
+                        <div class="flex items-center gap-3">
+                            <button 
+                                type="button" 
+                                onclick="closeFeedbackModal()" 
+                                class="px-4 py-2 rounded-md border border-zinc-200 text-zinc-700 hover:bg-zinc-50 transition-colors text-sm font-medium"
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit" 
+                                class="px-6 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition-colors text-sm font-medium flex items-center gap-2"
+                            >
+                                Submit
+                                <iconify-icon icon="lucide:arrow-right" width="16"></iconify-icon>
+                            </button>
+                        </div>
+                        <p class="text-xs text-zinc-500">Powered by Qualtrics</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

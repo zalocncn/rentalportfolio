@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Applications | Rental Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <script src="js/listing-storage.js"></script>
+    <script src="js/feedback-modal.js"></script>
+</head>
+<body class="bg-white text-zinc-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen">
+
+    <!-- Top Header -->
+    <header class="fixed top-0 right-0 left-0 md:left-64 h-14 bg-white border-b border-zinc-100 z-40">
+        <div class="h-full flex items-center justify-between px-6">
+            <div class="md:hidden">
+                <button class="p-2 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:menu" width="20" class="text-zinc-600"></iconify-icon>
+                </button>
+            </div>
+            <div class="flex items-center gap-4 ml-auto">
+                <div class="flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-50 rounded-md cursor-pointer transition-colors">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs font-medium">R</div>
+                    <span class="text-sm font-medium text-zinc-900 hidden sm:block">Rita</span>
+                    <iconify-icon icon="lucide:chevron-down" width="16" class="text-zinc-400"></iconify-icon>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-zinc-100 z-50 overflow-y-auto hidden md:block">
+        <div class="p-6 border-b border-zinc-100">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-emerald-600 rounded-md flex items-center justify-center text-white">
+                    <iconify-icon icon="lucide:building-2" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <span class="text-sm font-semibold tracking-tight">RENTAL MANAGER</span>
+            </a>
+        </div>
+        <nav class="p-4 space-y-1">
+            <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:layout-dashboard" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            
+            <a href="applications.html" class="flex items-center gap-3 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-md text-emerald-700">
+                <iconify-icon icon="lucide:users" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Applications</span>
+                <span class="flex h-2 w-2 rounded-full bg-emerald-500 ml-auto"></span>
+            </a>
+            <a href="payments.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Payments</span>
+            </a>
+            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Residents & Leases</span>
+            </a>
+            <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Maintenance</span>
+            </a>
+            <div class="pt-4 mt-4 border-t border-zinc-100 space-y-1">
+                <a href="messages.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:mail" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Messages</span>
+                </a>
+                <a href="help.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:help-circle" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Help</span>
+                </a>
+                <div class="account-dropdown">
+                    <button class="w-full flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors" onclick="toggleAccountDropdown()">
+                        <iconify-icon icon="lucide:settings" width="18" stroke-width="1.5"></iconify-icon>
+                        <span class="text-sm font-medium">Account</span>
+                        <iconify-icon icon="lucide:chevron-down" width="14" class="text-zinc-400 ml-auto account-chevron transition-transform"></iconify-icon>
+                    </button>
+                    <div class="account-submenu hidden mt-1 ml-4 space-y-1">
+                        <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            My Account
+                        </a>
+                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Banks & Cards
+                        </a>
+                        <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Billing History
+                        </a>
+                    </div>
+                </div>
+                <a href="#" onclick="openFeedbackModal(); return false;" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:message-square" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Provide Feedback</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 pt-14 min-h-screen bg-zinc-50">
+        <div class="p-6">
+            <!-- Page Header -->
+            <div class="mb-6">
+                <h1 class="text-3xl font-medium tracking-tight text-zinc-900 mb-2">Applications</h1>
+            </div>
+
+            <!-- Applications Content -->
+            <div class="bg-white rounded-lg border border-zinc-200 shadow-sm">
+                <!-- Tabs -->
+                <div class="border-b border-zinc-200 px-6">
+                    <div class="flex gap-8">
+                        <button class="tab-button active px-4 py-4 text-sm font-medium text-emerald-600 border-b-2 border-emerald-600 -mb-px">
+                            Active
+                        </button>
+                        <button class="tab-button px-4 py-4 text-sm font-medium text-zinc-600 hover:text-zinc-900 border-b-2 border-transparent -mb-px">
+                            Archived
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search and Filter Section -->
+                <div class="p-6 border-b border-zinc-200">
+                    <div class="flex flex-col md:flex-row gap-4 mb-4">
+                        <!-- Search Bar -->
+                        <div class="flex-1 relative">
+                            <input 
+                                type="text" 
+                                placeholder="Search by address, unit or property name" 
+                                class="w-full px-4 py-2 pr-10 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                            >
+                            <iconify-icon icon="lucide:search" width="18" class="absolute right-3 top-2.5 text-zinc-400"></iconify-icon>
+                        </div>
+                        <!-- Filter Dropdown -->
+                        <div class="md:w-48">
+                            <select class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                <option>All Applications</option>
+                                <option>Pending</option>
+                                <option>Approved</option>
+                                <option>Rejected</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Applications List -->
+                <div class="p-6">
+                    <!-- Application Count and Sort -->
+                    <div class="flex items-center justify-between mb-6">
+                        <p class="text-sm text-zinc-600">0 Application</p>
+                        <button class="flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900">
+                            <span>Sort: Newest to Oldest</span>
+                            <iconify-icon icon="lucide:arrow-up-down" width="16"></iconify-icon>
+                        </button>
+                    </div>
+
+                    <!-- No Results Message -->
+                    <div class="text-center py-16">
+                        <p class="text-lg font-medium text-zinc-900 mb-2">No Matching Results</p>
+                        <p class="text-sm text-zinc-500">Your search did not return any results.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Help Button -->
+    <button class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center justify-center z-30">
+        <iconify-icon icon="lucide:help-circle" width="24"></iconify-icon>
+    </button>
+
+    <!-- Invite to Apply Modal -->
+    <div id="inviteModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-zinc-200">
+                <h2 class="text-xl font-medium text-zinc-900">Select a property</h2>
+                <button onclick="closeInviteModal()" class="p-2 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:x" width="20" class="text-zinc-500"></iconify-icon>
+                </button>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="p-6">
+                <p class="text-sm text-zinc-600 mb-6">
+                    Select the property you would like to invite a renter to apply to.
+                </p>
+                
+                <!-- Property Selection -->
+                <div>
+                    <label for="propertySelect" class="block text-sm font-medium text-zinc-900 mb-2">
+                        Property
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="propertySelect" 
+                            placeholder="Select a property" 
+                            class="w-full px-4 py-2 pr-10 rounded-md border border-emerald-500 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                            autocomplete="off"
+                            oninput="handlePropertySearch(event)"
+                            onfocus="showPropertyDropdown()"
+                        >
+                        <iconify-icon icon="lucide:search" width="18" class="absolute right-3 top-2.5 text-emerald-600 pointer-events-none"></iconify-icon>
+                        
+                        <!-- Property Dropdown -->
+                        <div id="propertyDropdown" class="hidden absolute top-full left-0 right-0 mt-0.5 bg-white border border-emerald-500 rounded-b-md shadow-lg z-50 max-h-96 overflow-y-auto">
+                            <div id="propertyDropdownContent" class="p-0">
+                                <!-- Properties will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openInviteModal() {
+            const modal = document.getElementById('inviteModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                // Reset form
+                const input = document.getElementById('propertySelect');
+                if (input) {
+                    input.value = '';
+                }
+                hidePropertyDropdown();
+            }
+        }
+
+        function closeInviteModal() {
+            const modal = document.getElementById('inviteModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                // Reset form
+                const input = document.getElementById('propertySelect');
+                if (input) {
+                    input.value = '';
+                }
+                hidePropertyDropdown();
+            }
+        }
+
+        // Get all properties from localStorage
+        function getAllProperties() {
+            const publishedListings = ListingStorage.getAllListings();
+            
+            // Add default properties if no listings exist
+            const defaultProperties = [
+                {
+                    id: 'default-1',
+                    address: '123 Main Street, Los Angeles, CA 90001',
+                    unit: { monthlyRent: 1800, name: '' },
+                    status: 'active'
+                },
+                {
+                    id: 'default-2',
+                    address: '456 Oak Avenue, San Diego, CA 92101',
+                    unit: { monthlyRent: 2100, name: '' },
+                    status: 'vacant'
+                },
+                {
+                    id: 'default-3',
+                    address: '214 Via Robina, San Clemente, CA 92672',
+                    unit: { monthlyRent: 2500, name: '14' },
+                    status: 'active'
+                }
+            ];
+
+            return publishedListings.length > 0 ? publishedListings : defaultProperties;
+        }
+
+        // Format property address
+        function formatPropertyAddress(address) {
+            if (!address) return { street: '', cityState: '' };
+            const parts = address.split(',');
+            return {
+                street: parts[0]?.trim() || address,
+                cityState: parts.slice(1).join(',').trim() || ''
+            };
+        }
+
+        // Render property card for dropdown
+        function renderPropertyCard(property) {
+            const addressParts = formatPropertyAddress(property.address);
+            const streetAddress = addressParts.street;
+            const cityState = addressParts.cityState;
+            
+            // Get property photo if available
+            const firstPhoto = property.unit?.photos && property.unit.photos.length > 0 
+                ? property.unit.photos[0].dataUrl 
+                : null;
+            const photoSrc = firstPhoto || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop';
+            
+            return `
+                <div 
+                    onclick="selectProperty('${property.id}', '${property.address.replace(/'/g, "\\'")}')"
+                    class="flex items-center gap-4 p-4 border-b border-zinc-100 hover:bg-zinc-50 cursor-pointer transition-colors last:border-b-0"
+                >
+                    <div class="w-24 h-24 flex-shrink-0 rounded-md overflow-hidden bg-zinc-100">
+                        <img src="${photoSrc}" alt="${streetAddress}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-lg font-medium text-zinc-900 mb-1">${streetAddress}</div>
+                        <div class="text-sm text-zinc-600">${cityState}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Filter properties based on search term
+        function filterProperties(searchTerm) {
+            const properties = getAllProperties();
+            if (!searchTerm || searchTerm.trim() === '') {
+                return properties;
+            }
+            
+            const term = searchTerm.toLowerCase().trim();
+            return properties.filter(property => {
+                const address = property.address?.toLowerCase() || '';
+                const unitName = (property.unit?.name || '').toLowerCase();
+                const streetAddress = formatPropertyAddress(property.address).street.toLowerCase();
+                return address.includes(term) || streetAddress.includes(term) || unitName.includes(term);
+            });
+        }
+
+        // Show property dropdown
+        function showPropertyDropdown() {
+            const dropdown = document.getElementById('propertyDropdown');
+            const input = document.getElementById('propertySelect');
+            if (!dropdown || !input) return;
+            
+            const searchTerm = input.value;
+            const filteredProperties = filterProperties(searchTerm);
+            const dropdownContent = document.getElementById('propertyDropdownContent');
+            
+            if (!dropdownContent) return;
+            
+            if (filteredProperties.length === 0) {
+                dropdownContent.innerHTML = `
+                    <div class="p-4 text-center text-sm text-zinc-500">
+                        No properties found
+                    </div>
+                `;
+            } else {
+                dropdownContent.innerHTML = filteredProperties.map(property => 
+                    renderPropertyCard(property)
+                ).join('');
+            }
+            
+            dropdown.classList.remove('hidden');
+        }
+
+        // Hide property dropdown
+        function hidePropertyDropdown() {
+            const dropdown = document.getElementById('propertyDropdown');
+            if (dropdown) {
+                dropdown.classList.add('hidden');
+            }
+        }
+
+        // Handle property search input
+        function handlePropertySearch(event) {
+            const searchTerm = event.target.value;
+            showPropertyDropdown();
+        }
+
+        // Select a property
+        function selectProperty(propertyId, address) {
+            // Store selected property ID and navigate to payments setup
+            sessionStorage.setItem('selectedPropertyId', propertyId);
+            sessionStorage.setItem('selectedPropertyAddress', address);
+            
+            // Close modal and navigate to payments setup
+            closeInviteModal();
+            window.location.href = `set-up-payments.html?propertyId=${propertyId}`;
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('inviteModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeInviteModal();
+                    }
+                });
+            }
+            
+            // Close dropdown when clicking outside (but not when clicking inside modal)
+            document.addEventListener('click', function(event) {
+                const input = document.getElementById('propertySelect');
+                const dropdown = document.getElementById('propertyDropdown');
+                
+                if (input && dropdown && !input.contains(event.target) && !dropdown.contains(event.target)) {
+                    hidePropertyDropdown();
+                }
+            });
+            
+            // Listen for storage changes to update dropdown
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'publishedListings') {
+                    const dropdown = document.getElementById('propertyDropdown');
+                    if (dropdown && !dropdown.classList.contains('hidden')) {
+                        showPropertyDropdown();
+                    }
+                }
+            });
+            
+            // Override localStorage.setItem to detect property changes
+            const originalSetItem = localStorage.setItem;
+            localStorage.setItem = function(key, value) {
+                originalSetItem.apply(this, arguments);
+                if (key === 'publishedListings') {
+                    window.dispatchEvent(new Event('propertiesUpdated'));
+                }
+            };
+            
+            // Listen for custom event when properties are updated in same tab
+            window.addEventListener('propertiesUpdated', function() {
+                const dropdown = document.getElementById('propertyDropdown');
+                if (dropdown && !dropdown.classList.contains('hidden')) {
+                    showPropertyDropdown();
+                }
+            });
+        });
+        function toggleAccountDropdown() {
+            const submenu = document.querySelector('.account-submenu');
+            const chevron = document.querySelector('.account-chevron');
+            submenu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active styling from all tabs
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('text-emerald-600', 'border-emerald-600');
+                        btn.classList.add('text-zinc-600', 'border-transparent');
+                    });
+                    // Add active styling to clicked tab
+                    this.classList.remove('text-zinc-600', 'border-transparent');
+                    this.classList.add('text-emerald-600', 'border-emerald-600');
+                });
+            });
+        });
+
+        // Feedback Modal Functions
+        function openFeedbackModal() {
+            document.getElementById('feedbackModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Star rating functionality
+        function setRating(rating) {
+            const stars = document.querySelectorAll('.star-rating');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('text-yellow-400');
+                    star.classList.remove('text-zinc-300');
+                } else {
+                    star.classList.remove('text-yellow-400');
+                    star.classList.add('text-zinc-300');
+                }
+            });
+            document.getElementById('rating').value = rating;
+        }
+
+        // File upload handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('fileInput');
+            const fileDropZone = document.getElementById('fileDropZone');
+            const fileList = document.getElementById('fileList');
+
+            if (fileDropZone && fileInput) {
+                fileDropZone.addEventListener('click', () => fileInput.click());
+                
+                fileDropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    fileDropZone.classList.add('border-emerald-500', 'bg-emerald-50');
+                });
+                
+                fileDropZone.addEventListener('dragleave', () => {
+                    fileDropZone.classList.remove('border-emerald-500', 'bg-emerald-50');
+                });
+                
+                fileDropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    fileDropZone.classList.remove('border-emerald-500', 'bg-emerald-50');
+                    handleFiles(e.dataTransfer.files);
+                });
+
+                fileInput.addEventListener('change', (e) => {
+                    handleFiles(e.target.files);
+                });
+            }
+
+            function handleFiles(files) {
+                if (!fileList) return;
+                Array.from(files).forEach(file => {
+                    if (fileList.children.length < 5) {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'flex items-center justify-between p-2 bg-zinc-50 rounded text-sm';
+                        fileItem.innerHTML = `
+                            <span class="text-zinc-700">${file.name}</span>
+                            <button onclick="this.parentElement.remove()" class="text-red-600 hover:text-red-700">
+                                <iconify-icon icon="lucide:x" width="16"></iconify-icon>
+                            </button>
+                        `;
+                        fileList.appendChild(fileItem);
+                    }
+                });
+            }
+
+            // Show/hide "Other" text inputs
+            const topicOther = document.getElementById('topicOther');
+            const topicOtherText = document.getElementById('topicOtherText');
+            const roleOther = document.getElementById('roleOther');
+            const roleOtherText = document.getElementById('roleOtherText');
+
+            if (topicOther && topicOtherText) {
+                topicOther.addEventListener('change', function() {
+                    topicOtherText.classList.toggle('hidden', !this.checked);
+                });
+            }
+
+            if (roleOther && roleOtherText) {
+                roleOther.addEventListener('change', function() {
+                    roleOtherText.classList.toggle('hidden', !this.checked);
+                });
+            }
+
+            // Close modal when clicking outside
+            const feedbackModal = document.getElementById('feedbackModal');
+            if (feedbackModal) {
+                feedbackModal.addEventListener('click', (e) => {
+                    if (e.target.id === 'feedbackModal') {
+                        closeFeedbackModal();
+                    }
+                });
+            }
+        });
+
+        function submitFeedback() {
+            // Collect form data
+            const formData = {
+                rating: document.getElementById('rating')?.value || 0,
+                feedback: document.querySelector('textarea[name="feedback"]')?.value || '',
+                topics: Array.from(document.querySelectorAll('input[name="topics"]:checked')).map(cb => cb.value),
+                role: document.querySelector('input[name="role"]:checked')?.value || '',
+                name: document.querySelector('input[name="name"]')?.value || '',
+                email: document.querySelector('input[name="email"]')?.value || ''
+            };
+
+            // Here you would typically send the data to a server
+            console.log('Feedback submitted:', formData);
+            
+            // Show success message and close modal
+            alert('Thank you for your feedback!');
+            closeFeedbackModal();
+        }
+    </script>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <!-- Backdrop with blur -->
+        <div class="fixed inset-0 bg-black/30 backdrop-blur-sm" onclick="closeFeedbackModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <!-- Close Button -->
+                <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition-colors z-10">
+                    <iconify-icon icon="lucide:x" width="24"></iconify-icon>
+                </button>
+
+                <!-- Modal Header -->
+                <div class="p-6 border-b border-zinc-200">
+                    <div class="flex items-center justify-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center">
+                            <iconify-icon icon="lucide:building-2" width="20" class="text-white"></iconify-icon>
+                        </div>
+                        <span class="text-xl font-semibold text-zinc-900">Rental Manager</span>
+                        <span class="text-xs text-zinc-500 mt-1">™</span>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <form onsubmit="submitFeedback(); return false;" class="p-6 space-y-6">
+                    <!-- Website Experience Rating -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Please rate your website experience today:</h3>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="setRating(1)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(2)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(3)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(4)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(5)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="0">
+                    </div>
+
+                    <!-- Open-ended Feedback -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Tell us about your experience. What did you like? What can we do better?</h3>
+                        <textarea 
+                            name="feedback" 
+                            rows="6" 
+                            class="w-full px-4 py-3 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+                            placeholder="Share your thoughts..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Screenshot Upload -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Want to share any reference screenshot(s)? Upload here:</h3>
+                        <p class="text-xs text-zinc-500 mb-3">
+                            File number limit: 5 | Single file size limit: 100MB | Allowed file types: Word, Excel, PPT, PDF, Image, Video, Audio
+                        </p>
+                        <div 
+                            id="fileDropZone" 
+                            class="border-2 border-dashed border-zinc-300 rounded-lg p-8 text-center cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/50 transition-colors"
+                        >
+                            <iconify-icon icon="lucide:upload" width="32" class="text-zinc-400 mx-auto mb-2"></iconify-icon>
+                            <p class="text-sm text-zinc-600">Drop files or click here to upload</p>
+                        </div>
+                        <input type="file" id="fileInput" multiple class="hidden" accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.jpg,.jpeg,.png,.gif,.mp4,.mp3,.wav">
+                        <div id="fileList" class="mt-3 space-y-2"></div>
+                    </div>
+
+                    <!-- Feedback Topic Selection -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which topic(s) is your feedback about?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="listing" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Listing</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leases" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leases</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="payments" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Payments</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leads" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leads</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="expenses" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Expenses</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="maintenance" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Maintenance</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="applications" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Applications</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="other" id="topicOther" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="topicOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- User Role Description -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which best describes you?</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="renter" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Renter</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="rental-manager" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Rental Manager</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="other" id="roleOther" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="roleOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">May we contact you for more information about your experience?</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Name:</label>
+                                <input 
+                                    type="text" 
+                                    name="name" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Email:</label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="pt-6 border-t border-zinc-200 flex items-center justify-between">
+                        <p class="text-xs text-zinc-500">Protected by reCAPTCHA: Privacy & Terms</p>
+                        <div class="flex items-center gap-3">
+                            <button 
+                                type="button" 
+                                onclick="closeFeedbackModal()" 
+                                class="px-4 py-2 rounded-md border border-zinc-200 text-zinc-700 hover:bg-zinc-50 transition-colors text-sm font-medium"
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit" 
+                                class="px-6 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition-colors text-sm font-medium flex items-center gap-2"
+                            >
+                                Submit
+                                <iconify-icon icon="lucide:arrow-right" width="16"></iconify-icon>
+                            </button>
+                        </div>
+                        <p class="text-xs text-zinc-500">Powered by Qualtrics</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

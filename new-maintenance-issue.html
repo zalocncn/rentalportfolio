@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Maintenance Issue | Rental Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <script src="js/feedback-modal.js"></script>
+    <script src="js/listing-storage.js"></script>
+</head>
+<body class="bg-white text-zinc-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen">
+
+    <!-- Top Header -->
+    <header class="fixed top-0 right-0 left-0 md:left-64 h-14 bg-white border-b border-zinc-100 z-40">
+        <div class="h-full flex items-center justify-between px-6">
+            <div class="md:hidden">
+                <button class="p-2 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:menu" width="20" class="text-zinc-600"></iconify-icon>
+                </button>
+            </div>
+            <div class="flex items-center gap-4 ml-auto">
+                <a href="create-listing.html" class="text-sm font-medium bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors flex items-center gap-2">
+                    <iconify-icon icon="lucide:plus" width="14"></iconify-icon>
+                    Add a Property
+                </a>
+                <div class="flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-50 rounded-md cursor-pointer transition-colors">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs font-medium">R</div>
+                    <span class="text-sm font-medium text-zinc-900 hidden sm:block">Rita</span>
+                    <iconify-icon icon="lucide:chevron-down" width="16" class="text-zinc-400"></iconify-icon>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-zinc-100 z-50 overflow-y-auto hidden md:block">
+        <div class="p-6 border-b border-zinc-100">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-emerald-600 rounded-md flex items-center justify-center text-white">
+                    <iconify-icon icon="lucide:building-2" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <span class="text-sm font-semibold tracking-tight">RENTAL MANAGER</span>
+            </a>
+        </div>
+        <nav class="p-4 space-y-1">
+            <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:layout-dashboard" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            
+            <a href="payments.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Payments</span>
+            </a>
+            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Residents & Leases</span>
+            </a>
+            <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-md text-emerald-700">
+                <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
+                <span class="text-sm font-medium">Maintenance</span>
+                <span class="flex h-2 w-2 rounded-full bg-emerald-500 ml-auto"></span>
+            </a>
+            <div class="pt-4 mt-4 border-t border-zinc-100 space-y-1">
+                <a href="messages.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:mail" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Messages</span>
+                </a>
+                <a href="help.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:help-circle" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Help</span>
+                </a>
+                <div class="account-dropdown">
+                    <button class="w-full flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors" onclick="toggleAccountDropdown()">
+                        <iconify-icon icon="lucide:settings" width="18" stroke-width="1.5"></iconify-icon>
+                        <span class="text-sm font-medium">Account</span>
+                        <iconify-icon icon="lucide:chevron-down" width="14" class="text-zinc-400 ml-auto account-chevron transition-transform"></iconify-icon>
+                    </button>
+                    <div class="account-submenu hidden mt-1 ml-4 space-y-1">
+                        <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            My Account
+                        </a>
+                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Banks & Cards
+                        </a>
+                        <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
+                            Billing History
+                        </a>
+                    </div>
+                </div>
+                <a href="#" onclick="openFeedbackModal(); return false;" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
+                    <iconify-icon icon="lucide:message-square" width="18" stroke-width="1.5"></iconify-icon>
+                    <span class="text-sm font-medium">Provide Feedback</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 pt-14 min-h-screen bg-zinc-50">
+        <div class="p-6">
+            <div class="max-w-3xl mx-auto">
+                <!-- Page Header -->
+                <div class="mb-6 flex items-center justify-between">
+                    <h1 class="text-3xl font-medium tracking-tight text-zinc-900">New Maintenance Issue</h1>
+                    <a href="maintenance.html" class="px-4 py-2 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors">
+                        Cancel
+                    </a>
+                </div>
+
+                <!-- Form Card -->
+                <div class="bg-white rounded-lg border border-zinc-200 shadow-sm p-6 md:p-8">
+                    <form id="maintenanceForm" class="space-y-6">
+                        <!-- Choose a Property -->
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-900 mb-2">Choose a Property</label>
+                            <div class="relative">
+                                <input 
+                                    type="text" 
+                                    id="propertySearchInput"
+                                    class="w-full px-4 py-2 pr-10 rounded-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Search properties..."
+                                    autocomplete="off"
+                                    oninput="handlePropertySearch(event)"
+                                    onfocus="showPropertyDropdown()"
+                                >
+                                <iconify-icon icon="lucide:search" width="18" class="absolute right-3 top-2.5 text-zinc-400 pointer-events-none"></iconify-icon>
+                                
+                                <!-- Property Dropdown -->
+                                <div id="propertyDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-md shadow-lg z-50 max-h-96 overflow-y-auto">
+                                    <div id="propertyDropdownContent" class="p-0">
+                                        <!-- Properties will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-900 mb-2">Title</label>
+                            <input 
+                                type="text" 
+                                id="titleInput"
+                                maxlength="150"
+                                class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                placeholder=""
+                                onkeyup="updateTitleCharCount()"
+                            >
+                            <p class="text-xs text-zinc-500 mt-1">Example: Gutter Cleaning. Maximum 150 Characters.</p>
+                            <p id="titleCharCount" class="text-xs text-zinc-500 mt-1 text-right">150 characters remaining</p>
+                        </div>
+
+                        <!-- Description (optional) -->
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-900 mb-2">Description <span class="text-zinc-400 font-normal">(optional)</span></label>
+                            <textarea 
+                                id="descriptionInput"
+                                rows="6"
+                                maxlength="1500"
+                                class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-y"
+                                placeholder=""
+                                onkeyup="updateDescriptionCharCount()"
+                            ></textarea>
+                            <p id="descriptionCharCount" class="text-xs text-zinc-500 mt-1 text-right">1,500 characters remaining</p>
+                        </div>
+
+                        <!-- Attach a file -->
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-900 mb-2">Attach a file</label>
+                            <input type="file" id="fileInput" multiple accept=".pdf,.jpeg,.jpg,.png,.gif,.mov,.avi,.mp4,.wmv" class="hidden" onchange="handleFileSelection()">
+                            <button 
+                                type="button"
+                                onclick="document.getElementById('fileInput').click()"
+                                class="flex items-center gap-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+                            >
+                                <iconify-icon icon="lucide:paperclip" width="16"></iconify-icon>
+                                Add photos, videos, or other files
+                            </button>
+                            <p class="text-xs text-zinc-500 mt-1">
+                                Max file size is 75MB per file. PDF, JPEG, JPG, PNG, GIF, MOV, AVI, MP4 or WMV formats.
+                            </p>
+                            <div id="fileList" class="mt-3 space-y-2"></div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center justify-end pt-6 border-t border-zinc-200">
+                            <button 
+                                type="button"
+                                onclick="createPrivateIssue()"
+                                class="px-6 py-3 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors"
+                            >
+                                Create Private Issue
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Help Button -->
+    <button class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center justify-center z-30">
+        <iconify-icon icon="lucide:help-circle" width="24"></iconify-icon>
+    </button>
+
+    <script>
+        function toggleAccountDropdown() {
+            const submenu = document.querySelector('.account-submenu');
+            const chevron = document.querySelector('.account-chevron');
+            submenu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function updateTitleCharCount() {
+            const input = document.getElementById('titleInput');
+            const counter = document.getElementById('titleCharCount');
+            const remaining = 150 - input.value.length;
+            counter.textContent = `${remaining} characters remaining`;
+        }
+
+        function updateDescriptionCharCount() {
+            const input = document.getElementById('descriptionInput');
+            const counter = document.getElementById('descriptionCharCount');
+            const remaining = 1500 - input.value.length;
+            counter.textContent = `${remaining} characters remaining`;
+        }
+
+        function handleFileSelection() {
+            const input = document.getElementById('fileInput');
+            const fileList = document.getElementById('fileList');
+            const files = input.files;
+
+            fileList.innerHTML = '';
+            
+            Array.from(files).forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'flex items-center justify-between p-3 bg-zinc-50 rounded-md border border-zinc-200';
+                fileItem.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <iconify-icon icon="lucide:file" width="20" class="text-zinc-400"></iconify-icon>
+                        <div>
+                            <p class="text-sm font-medium text-zinc-900">${file.name}</p>
+                            <p class="text-xs text-zinc-500">${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="removeFile(${index})" class="p-1 hover:bg-zinc-200 rounded-md transition-colors">
+                        <iconify-icon icon="lucide:x" width="16" class="text-zinc-500"></iconify-icon>
+                    </button>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        }
+
+        function removeFile(index) {
+            const input = document.getElementById('fileInput');
+            const dt = new DataTransfer();
+            const files = Array.from(input.files);
+            
+            files.forEach((file, i) => {
+                if (i !== index) {
+                    dt.items.add(file);
+                }
+            });
+            
+            input.files = dt.files;
+            handleFileSelection();
+        }
+
+        // Property search and dropdown functionality
+        let selectedPropertyId = null;
+
+        // Get all properties from ListingStorage (real-time data from properties tab)
+        // Excludes properties that already have residents set up
+        function getAllProperties() {
+            // Get all published listings from ListingStorage
+            let publishedListings = ListingStorage.getAllListings();
+            
+            // Add default properties if no listings exist (for testing/demo)
+            if (publishedListings.length === 0) {
+                publishedListings = [
+                    {
+                        id: 'default-1',
+                        address: '123 Main Street, Los Angeles, CA 90001',
+                        unit: { monthlyRent: 1800, name: '' },
+                        status: 'active'
+                    },
+                    {
+                        id: 'default-2',
+                        address: '456 Oak Avenue, San Diego, CA 92101',
+                        unit: { monthlyRent: 2100, name: '' },
+                        status: 'vacant'
+                    },
+                    {
+                        id: 'default-3',
+                        address: '214 Via Robina, San Clemente, CA 92672',
+                        unit: { monthlyRent: 2500, name: '14' },
+                        status: 'active'
+                    }
+                ];
+            }
+            
+            // Get all residents to check which properties already have residents
+            const residents = JSON.parse(localStorage.getItem('residents') || '[]');
+            
+            // Get unique property IDs that already have residents
+            const propertiesWithResidents = new Set();
+            residents.forEach(resident => {
+                if (resident.propertyId) {
+                    propertiesWithResidents.add(resident.propertyId);
+                } else if (resident.property) {
+                    // Fallback: try to match by address if propertyId is not available
+                    const propertyId = getPropertyIdByAddressHelper(resident.property, publishedListings);
+                    if (propertyId) {
+                        propertiesWithResidents.add(propertyId);
+                    }
+                }
+            });
+            
+            // Filter out properties that already have residents
+            const availableProperties = publishedListings.filter(property => {
+                return !propertiesWithResidents.has(property.id);
+            });
+            
+            return availableProperties;
+        }
+
+        // Helper function to get property ID by address (if needed for fallback)
+        function getPropertyIdByAddressHelper(address, listings) {
+            if (!address || !listings) return null;
+            
+            // Try to find exact match first
+            let property = listings.find(listing => {
+                const listingAddress = (listing.address || '').toLowerCase();
+                const searchAddress = address.toLowerCase();
+                return listingAddress === searchAddress || listingAddress.includes(searchAddress) || searchAddress.includes(listingAddress);
+            });
+            
+            // If no match, try to match by street address
+            if (!property) {
+                const streetMatch = address.match(/^([^,]+)/);
+                if (streetMatch) {
+                    const street = streetMatch[1].trim().toLowerCase();
+                    property = listings.find(listing => {
+                        const listingStreet = (listing.address || '').split(',')[0].trim().toLowerCase();
+                        return listingStreet === street || listingStreet.includes(street) || street.includes(listingStreet);
+                    });
+                }
+            }
+            
+            return property ? property.id : null;
+        }
+
+        function formatPropertyAddress(address) {
+            if (!address) return '';
+            const parts = address.split(',');
+            return {
+                street: parts[0]?.trim() || address,
+                cityState: parts.slice(1).join(',').trim() || ''
+            };
+        }
+
+        function renderPropertyCard(property) {
+            const addressParts = formatPropertyAddress(property.address);
+            const streetAddress = addressParts.street;
+            const cityState = addressParts.cityState;
+            
+            // Get property photo if available
+            const firstPhoto = property.unit?.photos && property.unit.photos.length > 0 
+                ? property.unit.photos[0].dataUrl 
+                : null;
+            const photoSrc = firstPhoto || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop';
+            
+            return `
+                <div 
+                    onclick="selectProperty('${property.id}', '${property.address.replace(/'/g, "\\'")}')"
+                    class="flex items-center gap-4 p-4 border-b border-zinc-100 hover:bg-zinc-50 cursor-pointer transition-colors last:border-b-0"
+                >
+                    <div class="w-24 h-24 flex-shrink-0 rounded-md overflow-hidden bg-zinc-100">
+                        <img src="${photoSrc}" alt="${streetAddress}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-lg font-medium text-zinc-900 mb-1">${streetAddress}</div>
+                        <div class="text-sm text-zinc-600">${cityState}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterProperties(searchTerm) {
+            const properties = getAllProperties();
+            if (!searchTerm || searchTerm.trim() === '') {
+                return properties;
+            }
+            
+            const term = searchTerm.toLowerCase().trim();
+            return properties.filter(property => {
+                const address = property.address?.toLowerCase() || '';
+                const unitName = (property.unit?.name || '').toLowerCase();
+                const streetAddress = formatPropertyAddress(property.address).street.toLowerCase();
+                return address.includes(term) || streetAddress.includes(term) || unitName.includes(term);
+            });
+        }
+
+        function showPropertyDropdown() {
+            const dropdown = document.getElementById('propertyDropdown');
+            const input = document.getElementById('propertySearchInput');
+            const searchTerm = input.value;
+            
+            const filteredProperties = filterProperties(searchTerm);
+            const dropdownContent = document.getElementById('propertyDropdownContent');
+            
+            if (!filteredProperties || filteredProperties.length === 0) {
+                // Check if there are any properties at all
+                const allProperties = getAllProperties();
+                if (allProperties.length === 0) {
+                    dropdownContent.innerHTML = `
+                        <div class="p-4 text-center text-sm text-zinc-500">
+                            No properties available. Add a property first.
+                        </div>
+                    `;
+                } else if (searchTerm && searchTerm.trim() !== '') {
+                    dropdownContent.innerHTML = `
+                        <div class="p-4 text-center text-sm text-zinc-500">
+                            No properties found matching "${searchTerm}"
+                        </div>
+                    `;
+                } else {
+                    dropdownContent.innerHTML = `
+                        <div class="p-4 text-center text-sm text-zinc-500">
+                            All properties already have residents set up
+                        </div>
+                    `;
+                }
+            } else {
+                dropdownContent.innerHTML = filteredProperties.map(property => 
+                    renderPropertyCard(property)
+                ).join('');
+            }
+            
+            dropdown.classList.remove('hidden');
+        }
+
+        function hidePropertyDropdown() {
+            const dropdown = document.getElementById('propertyDropdown');
+            dropdown.classList.add('hidden');
+        }
+
+        function handlePropertySearch(event) {
+            const searchTerm = event.target.value;
+            showPropertyDropdown();
+        }
+
+        function selectProperty(propertyId, address) {
+            const input = document.getElementById('propertySearchInput');
+            // Get the property to extract full details
+            const properties = getAllProperties();
+            const selectedProperty = properties.find(p => p.id === propertyId);
+            
+            if (selectedProperty) {
+                const formattedAddress = formatPropertyAddress(selectedProperty.address);
+                // Don't fill the input - keep it empty for searching (matching set-up-residents behavior)
+                // input.value = formattedAddress.street;
+                if (input) {
+                    input.value = ''; // Clear the input
+                }
+                selectedPropertyId = propertyId;
+                
+                // If property has a unit name, pre-fill the unit input
+                const unitInput = document.getElementById('unitInput');
+                if (unitInput && selectedProperty.unit?.name) {
+                    unitInput.value = selectedProperty.unit.name;
+                }
+            } else {
+                // Fallback: clear input
+                if (input) {
+                    input.value = '';
+                }
+                selectedPropertyId = propertyId;
+            }
+            
+            hidePropertyDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const propertyInput = document.getElementById('propertySearchInput');
+            const dropdown = document.getElementById('propertyDropdown');
+            
+            if (!propertyInput.contains(event.target) && !dropdown.contains(event.target)) {
+                hidePropertyDropdown();
+            }
+        });
+
+        function createPrivateIssue() {
+            const form = document.getElementById('maintenanceForm');
+            const propertyInput = document.getElementById('propertySearchInput').value || '';
+            const title = document.getElementById('titleInput').value.trim();
+            const description = document.getElementById('descriptionInput').value.trim();
+            const fileInput = document.getElementById('fileInput');
+            
+            // Validate required fields
+            if (!title) {
+                alert('Please enter a title for the maintenance issue.');
+                return;
+            }
+            
+            if (!selectedPropertyId) {
+                alert('Please select a property.');
+                return;
+            }
+
+            // Get the selected property to get full address
+            const properties = getAllProperties();
+            const selectedProperty = properties.find(p => p.id === selectedPropertyId);
+            let propertyAddress = propertyInput;
+            let streetAddress = propertyAddress;
+            let cityState = '';
+            
+            if (selectedProperty) {
+                propertyAddress = selectedProperty.address || propertyInput;
+            }
+            
+            // Split address if it contains comma
+            if (propertyAddress.includes(',')) {
+                const parts = propertyAddress.split(',');
+                streetAddress = parts[0].trim();
+                cityState = parts.slice(1).join(',').trim();
+            }
+
+            // Get file information
+            const files = Array.from(fileInput.files).map(file => ({
+                name: file.name,
+                size: file.size,
+                type: file.type
+            }));
+
+            const formData = {
+                id: Date.now().toString(),
+                property: propertyAddress,
+                propertyId: selectedPropertyId || null,
+                unit: '',
+                streetAddress: streetAddress,
+                cityState: cityState,
+                title: title,
+                description: description,
+                files: files,
+                fileCount: files.length,
+                createdAt: new Date().toISOString(),
+                createdDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                createdBy: 'Rita Noriega',
+                status: 'open',
+                isPrivate: true
+            };
+
+            // Save to localStorage
+            const issues = JSON.parse(localStorage.getItem('maintenanceIssues') || '[]');
+            issues.push(formData);
+            localStorage.setItem('maintenanceIssues', JSON.stringify(issues));
+
+            // Redirect to maintenance page
+            window.location.href = 'maintenance.html';
+        }
+
+        // Initialize property dropdown on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('propertySearchInput');
+            // Clear default value - don't prefill
+            if (input && input.value) {
+                input.value = '';
+            }
+            
+            // Listen for storage changes to update dropdown (cross-tab)
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'publishedListings') {
+                    // Reload properties if they change
+                    const dropdown = document.getElementById('propertyDropdown');
+                    if (dropdown && !dropdown.classList.contains('hidden')) {
+                        showPropertyDropdown();
+                    }
+                }
+            });
+            
+            // Listen for custom event when properties are updated in same tab
+            window.addEventListener('propertiesUpdated', function() {
+                const dropdown = document.getElementById('propertyDropdown');
+                // Refresh dropdown if it's visible
+                if (dropdown && !dropdown.classList.contains('hidden')) {
+                    showPropertyDropdown();
+                }
+                // Also refresh if input has focus (user is searching)
+                const input = document.getElementById('propertySearchInput');
+                if (input && document.activeElement === input) {
+                    showPropertyDropdown();
+                }
+            });
+            
+            // Override localStorage.setItem to detect property changes
+            const originalSetItem = localStorage.setItem;
+            localStorage.setItem = function(key, value) {
+                originalSetItem.apply(this, arguments);
+                if (key === 'publishedListings') {
+                    // Dispatch custom event
+                    window.dispatchEvent(new Event('propertiesUpdated'));
+                }
+            };
+        });
+    </script>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <!-- Backdrop with blur -->
+        <div class="fixed inset-0 bg-black/30 backdrop-blur-sm" onclick="closeFeedbackModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <!-- Close Button -->
+                <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition-colors z-10">
+                    <iconify-icon icon="lucide:x" width="24"></iconify-icon>
+                </button>
+
+                <!-- Modal Header -->
+                <div class="p-6 border-b border-zinc-200">
+                    <div class="flex items-center justify-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center">
+                            <iconify-icon icon="lucide:building-2" width="20" class="text-white"></iconify-icon>
+                        </div>
+                        <span class="text-xl font-semibold text-zinc-900">Rental Manager</span>
+                        <span class="text-xs text-zinc-500 mt-1">™</span>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <form onsubmit="submitFeedback(); return false;" class="p-6 space-y-6">
+                    <!-- Website Experience Rating -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Please rate your website experience today:</h3>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="setRating(1)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(2)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(3)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(4)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                            <button type="button" onclick="setRating(5)" class="star-rating text-zinc-300 hover:text-yellow-400 transition-colors">
+                                <iconify-icon icon="lucide:star" width="24" fill="currentColor"></iconify-icon>
+                            </button>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="0">
+                    </div>
+
+                    <!-- Open-ended Feedback -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Tell us about your experience. What did you like? What can we do better?</h3>
+                        <textarea 
+                            name="feedback" 
+                            rows="6" 
+                            class="w-full px-4 py-3 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+                            placeholder="Share your thoughts..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Screenshot Upload -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-2">Want to share any reference screenshot(s)? Upload here:</h3>
+                        <p class="text-xs text-zinc-500 mb-3">
+                            File number limit: 5 | Single file size limit: 100MB | Allowed file types: Word, Excel, PPT, PDF, Image, Video, Audio
+                        </p>
+                        <div 
+                            id="fileDropZone" 
+                            class="border-2 border-dashed border-zinc-300 rounded-lg p-8 text-center cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/50 transition-colors"
+                        >
+                            <iconify-icon icon="lucide:upload" width="32" class="text-zinc-400 mx-auto mb-2"></iconify-icon>
+                            <p class="text-sm text-zinc-600">Drop files or click here to upload</p>
+                        </div>
+                        <input type="file" id="fileInput" multiple class="hidden" accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.jpg,.jpeg,.png,.gif,.mp4,.mp3,.wav">
+                        <div id="fileList" class="mt-3 space-y-2"></div>
+                    </div>
+
+                    <!-- Feedback Topic Selection -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which topic(s) is your feedback about?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="listing" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Listing</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leases" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leases</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="payments" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Payments</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="leads" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Leads</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="expenses" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Expenses</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="maintenance" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Maintenance</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="applications" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Applications</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="topics" value="other" id="topicOther" class="w-4 h-4 text-emerald-600 border-zinc-300 rounded focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="topicOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- User Role Description -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">Which best describes you?</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="renter" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Renter</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="rental-manager" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Rental Manager</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="role" value="other" id="roleOther" class="w-4 h-4 text-emerald-600 border-zinc-300 focus:ring-emerald-500">
+                                <span class="text-sm text-zinc-700">Other</span>
+                            </label>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="roleOtherText" 
+                            placeholder="Please specify" 
+                            class="mt-2 w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent hidden"
+                        >
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 mb-3">May we contact you for more information about your experience?</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Name:</label>
+                                <input 
+                                    type="text" 
+                                    name="name" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm text-zinc-700 mb-1">Email:</label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    class="w-full px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    placeholder="Optional"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="pt-6 border-t border-zinc-200 flex items-center justify-between">
+                        <p class="text-xs text-zinc-500">Protected by reCAPTCHA: Privacy & Terms</p>
+                        <div class="flex items-center gap-3">
+                            <button 
+                                type="button" 
+                                onclick="closeFeedbackModal()" 
+                                class="px-4 py-2 rounded-md border border-zinc-200 text-zinc-700 hover:bg-zinc-50 transition-colors text-sm font-medium"
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit" 
+                                class="px-6 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition-colors text-sm font-medium flex items-center gap-2"
+                            >
+                                Submit
+                                <iconify-icon icon="lucide:arrow-right" width="16"></iconify-icon>
+                            </button>
+                        </div>
+                        <p class="text-xs text-zinc-500">Powered by Qualtrics</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
