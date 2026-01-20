@@ -51,11 +51,6 @@
                 <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Payments</span>
             </a>
-            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-md text-emerald-700">
-                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
-                <span class="text-sm font-medium">Residents & Leases</span>
-                <span class="flex h-2 w-2 rounded-full bg-emerald-500 ml-auto"></span>
-            </a>
             <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
                 <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Maintenance</span>
@@ -78,9 +73,6 @@
                     <div class="account-submenu hidden mt-1 ml-4 space-y-1">
                         <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
                             My Account
-                        </a>
-                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
-                            Banks & Cards
                         </a>
                         <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
                             Billing History
@@ -108,46 +100,6 @@
                     <a href="#" class="text-sm text-blue-600 hover:text-blue-700 underline">
                         Learn more about adding and managing residents
                     </a>
-                </div>
-
-                <!-- Select Property Section -->
-                <div class="bg-white rounded-lg border border-zinc-200 shadow-sm p-6 mb-6">
-                    <h2 class="text-lg font-medium text-zinc-900 mb-4">Select Property</h2>
-                    
-                    <div class="space-y-4">
-                        <div class="relative">
-                            <input 
-                                type="text" 
-                                id="propertySearchInput"
-                                placeholder="Search by address or property name" 
-                                class="w-full px-4 py-2.5 pr-10 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                                autocomplete="off"
-                                oninput="handlePropertySearch(event)"
-                                onfocus="showPropertyDropdown()"
-                            >
-                            <iconify-icon icon="lucide:search" width="18" class="absolute right-3 top-3 text-zinc-400 pointer-events-none"></iconify-icon>
-                            
-                            <!-- Property Dropdown -->
-                            <div id="propertyDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-md shadow-lg z-50 max-h-96 overflow-y-auto">
-                                <div id="propertyDropdownContent" class="p-0">
-                                    <!-- Properties will be loaded here -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Selected Property Card -->
-                        <div id="selectedPropertyCard" class="hidden bg-white border border-zinc-200 rounded-lg p-4">
-                            <div class="flex gap-4">
-                                <div class="w-24 h-24 bg-zinc-100 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="text-xs text-zinc-500">Image Coming Soon</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h3 id="selectedPropertyStreet" class="text-lg font-medium text-zinc-900 mb-1"></h3>
-                                    <p id="selectedPropertyCity" class="text-sm text-zinc-600"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Set Lease Term Section -->
@@ -207,6 +159,73 @@
                                     onchange="saveResidentData()"
                                 >
                                 <iconify-icon icon="lucide:calendar" width="18" class="absolute right-3 top-3 text-zinc-400 pointer-events-none"></iconify-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unit Details Section -->
+                <div class="bg-white rounded-lg border border-zinc-200 shadow-sm p-6 mb-6">
+                    <h2 class="text-lg font-medium text-zinc-900 mb-4">Unit Details</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Monthly Rent -->
+                        <div>
+                            <label for="monthlyRent" class="block text-sm font-medium text-zinc-900 mb-2">Monthly Rent</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-2.5 text-zinc-500">$</span>
+                                <input 
+                                    type="number" 
+                                    id="monthlyRent" 
+                                    placeholder="0" 
+                                    class="w-full pl-7 pr-4 py-2.5 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    oninput="saveResidentData()"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Deposit -->
+                        <div>
+                            <label for="deposit" class="block text-sm font-medium text-zinc-900 mb-2">Deposit</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-2.5 text-zinc-500">$</span>
+                                <input 
+                                    type="number" 
+                                    id="deposit" 
+                                    placeholder="0" 
+                                    class="w-full pl-7 pr-4 py-2.5 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    oninput="saveResidentData()"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Lease Length -->
+                        <div>
+                            <label for="leaseLength" class="block text-sm font-medium text-zinc-900 mb-2">Lease Length</label>
+                            <div class="flex w-full">
+                                <input 
+                                    type="number" 
+                                    id="leaseLength" 
+                                    value="12" 
+                                    class="flex-1 px-4 py-2.5 rounded-l-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    oninput="saveResidentData()"
+                                >
+                                <span class="px-4 py-2.5 bg-zinc-50 border border-l-0 border-zinc-200 rounded-r-md text-sm text-zinc-600 flex items-center whitespace-nowrap">Months</span>
+                            </div>
+                        </div>
+
+                        <!-- Parking Fee -->
+                        <div>
+                            <label for="parkingFee" class="block text-sm font-medium text-zinc-900 mb-2">Parking Fee</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-2.5 text-zinc-500">$</span>
+                                <input 
+                                    type="number" 
+                                    id="parkingFee" 
+                                    placeholder="0" 
+                                    class="w-full pl-7 pr-4 py-2.5 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                    oninput="saveResidentData()"
+                                >
                             </div>
                         </div>
                     </div>
@@ -349,223 +368,6 @@
             chevron.classList.toggle('rotate-180');
         }
 
-        // Get all properties from ListingStorage (real-time data from properties tab)
-        // Excludes properties that already have residents set up
-        function getAllProperties() {
-            // Get all published listings from ListingStorage
-            let publishedListings = ListingStorage.getAllListings();
-            
-            // Add default properties if no listings exist (for testing/demo)
-            if (publishedListings.length === 0) {
-                publishedListings = [
-                    {
-                        id: 'default-1',
-                        address: '123 Main Street, Los Angeles, CA 90001',
-                        unit: { monthlyRent: 1800, name: '' },
-                        status: 'active'
-                    },
-                    {
-                        id: 'default-2',
-                        address: '456 Oak Avenue, San Diego, CA 92101',
-                        unit: { monthlyRent: 2100, name: '' },
-                        status: 'vacant'
-                    },
-                    {
-                        id: 'default-3',
-                        address: '214 Via Robina, San Clemente, CA 92672',
-                        unit: { monthlyRent: 2500, name: '14' },
-                        status: 'active'
-                    }
-                ];
-            }
-            
-            // Get all residents to check which properties already have residents
-            const residents = JSON.parse(localStorage.getItem('residents') || '[]');
-            
-            // Get unique property IDs that already have residents
-            const propertiesWithResidents = new Set();
-            residents.forEach(resident => {
-                if (resident.propertyId) {
-                    propertiesWithResidents.add(resident.propertyId);
-                } else if (resident.property) {
-                    // Fallback: try to match by address if propertyId is not available
-                    const propertyId = getPropertyIdByAddressHelper(resident.property, publishedListings);
-                    if (propertyId) {
-                        propertiesWithResidents.add(propertyId);
-                    }
-                }
-            });
-            
-            // Filter out properties that already have residents
-            const availableProperties = publishedListings.filter(property => {
-                return !propertiesWithResidents.has(property.id);
-            });
-            
-            return availableProperties;
-        }
-
-        // Helper function to get property ID by address (if needed for fallback)
-        // Accepts listings array to avoid calling getAllListings multiple times
-        function getPropertyIdByAddressHelper(address, listings) {
-            if (!address || !listings) return null;
-            
-            // Try to find exact match first
-            let property = listings.find(listing => {
-                const listingAddress = (listing.address || '').toLowerCase();
-                const searchAddress = address.toLowerCase();
-                return listingAddress === searchAddress || listingAddress.includes(searchAddress) || searchAddress.includes(listingAddress);
-            });
-            
-            // If no match, try to match by street address
-            if (!property) {
-                const streetMatch = address.match(/^([^,]+)/);
-                if (streetMatch) {
-                    const street = streetMatch[1].trim().toLowerCase();
-                    property = listings.find(listing => {
-                        const listingStreet = (listing.address || '').split(',')[0].trim().toLowerCase();
-                        return listingStreet === street || listingStreet.includes(street) || street.includes(listingStreet);
-                    });
-                }
-            }
-            
-            return property ? property.id : null;
-        }
-
-        // Format property address
-        function formatPropertyAddress(address) {
-            if (!address) return { street: '', cityState: '' };
-            const parts = address.split(',');
-            return {
-                street: parts[0]?.trim() || address,
-                cityState: parts.slice(1).join(',').trim() || ''
-            };
-        }
-
-        // Render property card for dropdown
-        function renderPropertyCard(property) {
-            const addressParts = formatPropertyAddress(property.address);
-            const streetAddress = addressParts.street;
-            const cityState = addressParts.cityState;
-            
-            // Get property photo if available
-            const firstPhoto = property.unit?.photos && property.unit.photos.length > 0 
-                ? property.unit.photos[0].dataUrl 
-                : null;
-            const photoSrc = firstPhoto || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop';
-            
-            return `
-                <div 
-                    onclick="selectProperty('${property.id}', '${property.address.replace(/'/g, "\\'")}')"
-                    class="flex items-center gap-4 p-4 border-b border-zinc-100 hover:bg-zinc-50 cursor-pointer transition-colors last:border-b-0"
-                >
-                    <div class="w-24 h-24 flex-shrink-0 rounded-md overflow-hidden bg-zinc-100">
-                        <img src="${photoSrc}" alt="${streetAddress}" class="w-full h-full object-cover">
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="text-lg font-medium text-zinc-900 mb-1">${streetAddress}</div>
-                        <div class="text-sm text-zinc-600">${cityState}</div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Filter properties based on search term
-        function filterProperties(searchTerm) {
-            const properties = getAllProperties();
-            if (!searchTerm || searchTerm.trim() === '') {
-                return properties;
-            }
-            
-            const term = searchTerm.toLowerCase().trim();
-            return properties.filter(property => {
-                const address = property.address?.toLowerCase() || '';
-                const unitName = (property.unit?.name || '').toLowerCase();
-                const streetAddress = formatPropertyAddress(property.address).street.toLowerCase();
-                return address.includes(term) || streetAddress.includes(term) || unitName.includes(term);
-            });
-        }
-
-        // Show property dropdown
-        function showPropertyDropdown() {
-            const dropdown = document.getElementById('propertyDropdown');
-            const input = document.getElementById('propertySearchInput');
-            const searchTerm = input.value;
-            
-            const filteredProperties = filterProperties(searchTerm);
-            const dropdownContent = document.getElementById('propertyDropdownContent');
-            
-            if (!filteredProperties || filteredProperties.length === 0) {
-                // Check if there are any properties at all
-                const allProperties = getAllProperties();
-                if (allProperties.length === 0) {
-                    dropdownContent.innerHTML = `
-                        <div class="p-4 text-center text-sm text-zinc-500">
-                            No properties available. Add a property first.
-                        </div>
-                    `;
-                } else if (searchTerm && searchTerm.trim() !== '') {
-                    dropdownContent.innerHTML = `
-                        <div class="p-4 text-center text-sm text-zinc-500">
-                            No properties found matching "${searchTerm}"
-                        </div>
-                    `;
-                } else {
-                    dropdownContent.innerHTML = `
-                        <div class="p-4 text-center text-sm text-zinc-500">
-                            All properties already have residents set up
-                        </div>
-                    `;
-                }
-            } else {
-                dropdownContent.innerHTML = filteredProperties.map(property => 
-                    renderPropertyCard(property)
-                ).join('');
-            }
-            
-            dropdown.classList.remove('hidden');
-        }
-
-        // Hide property dropdown
-        function hidePropertyDropdown() {
-            const dropdown = document.getElementById('propertyDropdown');
-            dropdown.classList.add('hidden');
-        }
-
-        // Handle property search input
-        function handlePropertySearch(event) {
-            const searchTerm = event.target.value;
-            showPropertyDropdown();
-        }
-
-        // Select a property
-        function selectProperty(propertyId, address) {
-            const input = document.getElementById('propertySearchInput');
-            const addressParts = formatPropertyAddress(address);
-            // Don't fill the input - keep it empty for searching
-            // input.value = `${addressParts.street} ${addressParts.cityState}`;
-            if (input) {
-                input.value = ''; // Clear the input
-            }
-            hidePropertyDropdown();
-            
-            // Store selected property ID for later use
-            sessionStorage.setItem('selectedPropertyId', propertyId);
-            sessionStorage.setItem('selectedPropertyAddress', address);
-            
-            // Show selected property card
-            const selectedCard = document.getElementById('selectedPropertyCard');
-            const streetEl = document.getElementById('selectedPropertyStreet');
-            const cityEl = document.getElementById('selectedPropertyCity');
-            
-            if (selectedCard && streetEl && cityEl) {
-                streetEl.textContent = addressParts.street;
-                cityEl.textContent = addressParts.cityState;
-                selectedCard.classList.remove('hidden');
-            }
-            
-            // Save resident setup data for this property
-            saveResidentData();
-        }
 
         // Save resident setup data for property
         function saveResidentSetupData(propertyId, address) {
@@ -707,6 +509,10 @@
             const leaseType = document.querySelector('input[name="leaseType"]:checked')?.value || 'fixed';
             const leaseStartDate = document.getElementById('leaseStartDate')?.value || '';
             const leaseEndDate = document.getElementById('leaseEndDate')?.value || '';
+            const monthlyRent = document.getElementById('monthlyRent')?.value || '';
+            const deposit = document.getElementById('deposit')?.value || '';
+            const leaseLength = document.getElementById('leaseLength')?.value || '12';
+            const parkingFee = document.getElementById('parkingFee')?.value || '';
 
             const residents = [];
             const residentForms = document.querySelectorAll('.resident-form');
@@ -743,6 +549,10 @@
                 leaseType,
                 leaseStartDate,
                 leaseEndDate,
+                monthlyRent,
+                deposit,
+                leaseLength,
+                parkingFee,
                 residents,
                 updatedAt: new Date().toISOString()
             };
@@ -759,12 +569,29 @@
 
         // Finish setup
         function finishSetup() {
-            const propertyId = sessionStorage.getItem('selectedPropertyId');
-            const propertyAddress = sessionStorage.getItem('selectedPropertyAddress');
+            // Get property ID from URL or sessionStorage
+            const urlParams = new URLSearchParams(window.location.search);
+            let propertyId = urlParams.get('propertyId') || sessionStorage.getItem('selectedPropertyId');
+            let propertyAddress = sessionStorage.getItem('selectedPropertyAddress');
             
             if (!propertyId) {
-                alert('Please select a property first.');
+                alert('Property ID is required. Please navigate from a property page.');
                 return;
+            }
+            
+            // If property address is not in sessionStorage, get it from property data
+            if (!propertyAddress) {
+                if (propertyId === 'default-1') {
+                    propertyAddress = '214 Via Robina, San Clemente, CA 92672';
+                } else {
+                    const property = ListingStorage.getListingById(propertyId);
+                    if (property) {
+                        propertyAddress = property.address || '';
+                    }
+                }
+                if (propertyAddress) {
+                    sessionStorage.setItem('selectedPropertyAddress', propertyAddress);
+                }
             }
 
             const leaseStartDate = document.getElementById('leaseStartDate')?.value;
@@ -846,42 +673,47 @@
             window.location.href = `set-up-payments.html?propertyId=${propertyId}`;
         }
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const input = document.getElementById('propertySearchInput');
-            const dropdown = document.getElementById('propertyDropdown');
-            
-            if (!input.contains(event.target) && !dropdown.contains(event.target)) {
-                hidePropertyDropdown();
-            }
-        });
 
         // Load properties when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if property is already selected
-            const propertyId = sessionStorage.getItem('selectedPropertyId');
-            const propertyAddress = sessionStorage.getItem('selectedPropertyAddress');
+            // Get property ID from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const propertyId = urlParams.get('propertyId');
             
-            if (propertyId && propertyAddress) {
-                // Don't prefill the input - let user search/select fresh
-                // const input = document.getElementById('propertySearchInput');
-                // const addressParts = formatPropertyAddress(propertyAddress);
-                // if (input) {
-                //     input.value = `${addressParts.street} ${addressParts.cityState}`;
-                // }
+            if (propertyId) {
+                // Store property ID for later use
+                sessionStorage.setItem('selectedPropertyId', propertyId);
                 
-                // Show selected property card
-                const selectedCard = document.getElementById('selectedPropertyCard');
-                const streetEl = document.getElementById('selectedPropertyStreet');
-                const cityEl = document.getElementById('selectedPropertyCity');
-                const addressParts = formatPropertyAddress(propertyAddress);
+                // Get property data and auto-populate
+                let property = null;
+                let propertyAddress = '';
                 
-                if (selectedCard && streetEl && cityEl) {
-                    streetEl.textContent = addressParts.street;
-                    cityEl.textContent = addressParts.cityState;
-                    selectedCard.classList.remove('hidden');
+                if (propertyId === 'default-1') {
+                    // Default property
+                    propertyAddress = '214 Via Robina, San Clemente, CA 92672';
+                    // Create a default property object for pre-population
+                    property = {
+                        unit: {
+                            monthlyRent: '',
+                            deposit: '',
+                            leaseLength: '',
+                        },
+                        parking: {
+                            fee: ''
+                        }
+                    };
+                } else {
+                    // Get property from storage
+                    property = ListingStorage.getListingById(propertyId);
+                    if (property) {
+                        propertyAddress = property.address || '';
+                    }
                 }
-            }
+                
+                // Store property address
+                if (propertyAddress) {
+                    sessionStorage.setItem('selectedPropertyAddress', propertyAddress);
+                }
 
             // Load saved resident data if exists
             const savedData = localStorage.getItem('residentSetupData');
@@ -897,8 +729,33 @@
                     if (data.leaseType) {
                         document.getElementById(`leaseType${data.leaseType === 'fixed' ? 'Fixed' : 'Monthly'}`).checked = true;
                     }
+                    if (data.monthlyRent) {
+                        document.getElementById('monthlyRent').value = data.monthlyRent;
+                    }
+                    if (data.deposit) {
+                        document.getElementById('deposit').value = data.deposit;
+                    }
+                    if (data.leaseLength) {
+                        document.getElementById('leaseLength').value = data.leaseLength;
+                    }
                 } catch (e) {
                     console.error('Error loading saved data:', e);
+                }
+            }
+            
+            // Pre-populate from property data if property is selected
+            if (propertyId) {
+                const property = ListingStorage.getListingById(propertyId);
+                if (property && property.unit) {
+                    if (property.unit.monthlyRent && !document.getElementById('monthlyRent').value) {
+                        document.getElementById('monthlyRent').value = property.unit.monthlyRent;
+                    }
+                    if (property.unit.deposit && !document.getElementById('deposit').value) {
+                        document.getElementById('deposit').value = property.unit.deposit;
+                    }
+                    if (property.unit.leaseLength && !document.getElementById('leaseLength').value) {
+                        document.getElementById('leaseLength').value = property.unit.leaseLength;
+                    }
                 }
             }
             

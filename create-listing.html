@@ -50,10 +50,6 @@
                 <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Payments</span>
             </a>
-            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
-                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
-                <span class="text-sm font-medium">Residents & Leases</span>
-            </a>
             <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
                 <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Maintenance</span>
@@ -72,9 +68,6 @@
                     <div class="account-submenu hidden mt-1 ml-4 space-y-1">
                         <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
                             My Account
-                        </a>
-                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
-                            Banks & Cards
                         </a>
                         <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
                             Billing History
@@ -97,46 +90,23 @@
                 <div class="bg-white rounded-lg border border-zinc-200 shadow-sm p-8">
                     <div class="mb-8">
                         <h1 class="text-2xl font-medium tracking-tight text-zinc-900 mb-2">Create Rental</h1>
-                        <div class="flex items-center gap-2 text-sm text-zinc-500">
-                            <span class="font-medium">Step 1 of 6: Basics</span>
+                        <div class="flex items-center gap-2 text-sm text-zinc-500 mb-4">
+                            <span class="font-medium">Step 1 of 4: Basics</span>
                             <span>•</span>
                             <span>Enter basic information about your property.</span>
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                        <!-- Left Sidebar - Steps -->
-                        <div class="lg:col-span-1">
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white text-sm font-medium">1</div>
-                                    <span class="text-sm font-medium text-zinc-900">Basics</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full border-2 border-zinc-300 flex items-center justify-center text-zinc-400 text-sm font-medium">2</div>
-                                    <span class="text-sm text-zinc-500">Amenities</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full border-2 border-zinc-300 flex items-center justify-center text-zinc-400 text-sm font-medium">3</div>
-                                    <span class="text-sm text-zinc-500">Media</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full border-2 border-zinc-300 flex items-center justify-center text-zinc-400 text-sm font-medium">4</div>
-                                    <span class="text-sm text-zinc-500">Description</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full border-2 border-zinc-300 flex items-center justify-center text-zinc-400 text-sm font-medium">5</div>
-                                    <span class="text-sm text-zinc-500">Contact</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full border-2 border-zinc-300 flex items-center justify-center text-zinc-400 text-sm font-medium">6</div>
-                                    <span class="text-sm text-zinc-500">Review</span>
-                                </div>
+                        
+                        <!-- Horizontal Progress Bar -->
+                        <div class="w-full">
+                            <div class="w-full h-1 bg-zinc-200 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-600 rounded-full transition-all duration-300" style="width: 25%"></div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Right Side - Form -->
-                        <div class="lg:col-span-3">
+                    <div>
+                        <!-- Form -->
+                        <div>
 
                             <!-- Add Your Property Section -->
                             <div class="mb-8 bg-white rounded-lg border border-zinc-200 p-6">
@@ -228,33 +198,6 @@
                                         <div class="flex w-full">
                                             <input type="number" id="size" placeholder="0" class="flex-1 px-4 py-2 rounded-l-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" oninput="saveUnitData(); validateForm();">
                                             <span class="px-4 py-2 bg-zinc-50 border border-l-0 border-zinc-200 rounded-r-md text-sm text-zinc-600 flex items-center whitespace-nowrap">Sq Ft.</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Monthly Rent -->
-                                    <div>
-                                        <label class="block text-sm font-medium text-zinc-900 mb-2">Monthly Rent</label>
-                                        <div class="relative">
-                                            <span class="absolute left-3 top-2.5 text-zinc-500">$</span>
-                                            <input type="number" id="monthlyRent" placeholder="0" class="w-full pl-7 pr-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" oninput="saveUnitData(); validateForm();">
-                                        </div>
-                                    </div>
-
-                                    <!-- Deposit -->
-                                    <div>
-                                        <label class="block text-sm font-medium text-zinc-900 mb-2">Deposit</label>
-                                        <div class="relative">
-                                            <span class="absolute left-3 top-2.5 text-zinc-500">$</span>
-                                            <input type="number" id="deposit" placeholder="0" class="w-full pl-7 pr-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" oninput="saveUnitData(); validateForm();">
-                                        </div>
-                                    </div>
-
-                                    <!-- Lease Length -->
-                                    <div>
-                                        <label class="block text-sm font-medium text-zinc-900 mb-2">Lease Length</label>
-                                        <div class="flex w-full">
-                                            <input type="number" id="leaseLength" value="12" class="flex-1 px-4 py-2 rounded-l-md border border-zinc-200 bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" oninput="saveUnitData(); validateForm();">
-                                            <span class="px-4 py-2 bg-zinc-50 border border-l-0 border-zinc-200 rounded-r-md text-sm text-zinc-600 flex items-center whitespace-nowrap">Months</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1027,9 +970,6 @@
             const beds = document.getElementById('beds')?.value || '';
             const baths = document.getElementById('baths')?.value || '';
             const size = document.getElementById('size')?.value || '';
-            const monthlyRent = document.getElementById('monthlyRent')?.value || '';
-            const deposit = document.getElementById('deposit')?.value || '';
-            const leaseLength = document.getElementById('leaseLength')?.value || '';
 
             // Check if all required fields are filled
             // beds can be Studio, 1, 2, 3, or 4+ (any selected value is valid, but must not be empty)
@@ -1038,10 +978,7 @@
             // unitName is optional (not in the form)
             const isValid = beds !== '' && 
                            baths !== '' && baths !== 'Select' && 
-                           size !== '' && parseFloat(size) > 0 &&
-                           monthlyRent !== '' && parseFloat(monthlyRent) > 0 &&
-                           deposit !== '' && parseFloat(deposit) > 0 &&
-                           leaseLength !== '' && parseFloat(leaseLength) > 0;
+                           size !== '' && parseFloat(size) > 0;
 
             const button = document.getElementById('saveContinueButton');
             const warning = document.getElementById('validationWarning');
@@ -1069,9 +1006,6 @@
             document.getElementById('beds').value = '';
             document.getElementById('baths').value = 'Select';
             document.getElementById('size').value = '';
-            document.getElementById('monthlyRent').value = '';
-            document.getElementById('deposit').value = '';
-            document.getElementById('leaseLength').value = '12';
             document.getElementById('yearBuilt').value = '';
         }
 
@@ -1105,9 +1039,6 @@
             const beds = document.getElementById('beds')?.value || '';
             const baths = document.getElementById('baths')?.value || '';
             const size = document.getElementById('size')?.value || '';
-            const monthlyRent = document.getElementById('monthlyRent')?.value || '';
-            const deposit = document.getElementById('deposit')?.value || '';
-            const leaseLength = document.getElementById('leaseLength')?.value || '12';
             const yearBuilt = document.getElementById('yearBuilt')?.value || '';
 
             // Get existing saved data to preserve amenities, description, and photos
@@ -1121,9 +1052,6 @@
                     beds: beds,
                     baths: baths,
                     size: size,
-                    monthlyRent: monthlyRent,
-                    deposit: deposit,
-                    leaseLength: leaseLength,
                     amenities: current.unit?.amenities || [],
                     description: current.unit?.description || '',
                     photos: current.unit?.photos || []
@@ -1234,9 +1162,6 @@
                 if (saved.unit.beds) document.getElementById('beds').value = saved.unit.beds;
                 if (saved.unit.baths) document.getElementById('baths').value = saved.unit.baths;
                 if (saved.unit.size) document.getElementById('size').value = saved.unit.size;
-                if (saved.unit.monthlyRent) document.getElementById('monthlyRent').value = saved.unit.monthlyRent;
-                if (saved.unit.deposit) document.getElementById('deposit').value = saved.unit.deposit;
-                if (saved.unit.leaseLength) document.getElementById('leaseLength').value = saved.unit.leaseLength;
                 if (saved.building?.yearBuilt) document.getElementById('yearBuilt').value = saved.building.yearBuilt;
             }
             // Validate form after loading saved data
@@ -1266,9 +1191,6 @@
             const beds = document.getElementById('beds')?.value || '';
             const baths = document.getElementById('baths')?.value || '';
             const size = document.getElementById('size')?.value || '';
-            const monthlyRent = document.getElementById('monthlyRent')?.value || '';
-            const deposit = document.getElementById('deposit')?.value || '';
-            const leaseLength = document.getElementById('leaseLength')?.value || '12';
             const yearBuilt = document.getElementById('yearBuilt')?.value || '';
 
             // Get existing saved data to preserve amenities, description, and photos
@@ -1282,9 +1204,6 @@
                     beds: beds,
                     baths: baths,
                     size: size,
-                    monthlyRent: monthlyRent,
-                    deposit: deposit,
-                    leaseLength: leaseLength,
                     amenities: current.unit?.amenities || [],
                     description: current.unit?.description || '',
                     photos: current.unit?.photos || []

@@ -94,15 +94,12 @@ const ListingStorage = {
                 beds: form.querySelector('select')?.value || '',
                 baths: Array.from(form.querySelectorAll('select'))[1]?.value || '',
                 size: Array.from(form.querySelectorAll('input[type="number"]'))[0]?.value || '',
-                monthlyRent: Array.from(form.querySelectorAll('input[type="number"]'))[1]?.value || '',
-                deposit: Array.from(form.querySelectorAll('input[type="number"]'))[2]?.value || '',
-                leaseLength: Array.from(form.querySelectorAll('input[type="number"]'))[3]?.value || '12',
                 photos: [],
                 amenities: [],
                 description: ''
             },
             building: {
-                yearBuilt: Array.from(form.querySelectorAll('input[type="number"]'))[4]?.value || ''
+                yearBuilt: Array.from(form.querySelectorAll('input[type="number"]'))[1]?.value || ''
             }
         };
         return data;
@@ -123,9 +120,6 @@ const ListingStorage = {
         const parkingSelect = Array.from(form.querySelectorAll('select')).find(s => 
             s.previousElementSibling?.textContent?.includes('parking')
         );
-        const parkingFeeInput = Array.from(form.querySelectorAll('input[type="number"]')).find(input => 
-            input.previousElementSibling?.textContent?.includes('Parking Fee')
-        );
 
         return {
             propertyAmenities: selectedAmenities.filter(a => 
@@ -136,8 +130,7 @@ const ListingStorage = {
                 ['Gas', 'Water', 'Electricity', 'Heat', 'Trash Removal', 'Sewer', 'Cable', 'Air Conditioning'].some(term => a.includes(term))
             ),
             parking: {
-                type: parkingSelect?.value || '',
-                fee: parkingFeeInput?.value || ''
+                type: parkingSelect?.value || ''
             },
             pets: {
                 allowed: form.querySelector('input[name="pets"]')?.checked || false,
@@ -155,13 +148,9 @@ const ListingStorage = {
         };
     },
 
-    // Collect data from Step 4 form
+    // Collect data from Step 4 form (removed - Description step was removed)
     collectStep4Data() {
-        const form = document.querySelector('form') || document;
-        const textarea = form.querySelector('textarea');
-        return {
-            description: textarea?.value || ''
-        };
+        return {};
     },
 
     // Collect data from Step 5 form
@@ -199,16 +188,12 @@ const ListingStorage = {
         const step1 = this.collectStep1Data();
         const step2 = this.collectStep2Data();
         const step3 = this.collectStep3Data();
-        const step4 = this.collectStep4Data();
-        const step5 = this.collectStep5Data();
         const step6 = this.collectStep6Data();
 
         return {
             ...step1,
             ...step2,
             ...step3,
-            ...step4,
-            ...step5,
             ...step6
         };
     },
@@ -238,10 +223,12 @@ function autoSaveStepData(stepNumber) {
             stepData = ListingStorage.collectStep3Data();
             break;
         case 4:
-            stepData = ListingStorage.collectStep4Data();
+            // Step 4 (Description) was removed
+            stepData = {};
             break;
         case 5:
-            stepData = ListingStorage.collectStep5Data();
+            // Step 5 (Contact) was removed
+            stepData = {};
             break;
         case 6:
             stepData = ListingStorage.collectStep6Data();

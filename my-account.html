@@ -53,10 +53,6 @@
                 <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Payments</span>
             </a>
-            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
-                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
-                <span class="text-sm font-medium">Residents & Leases</span>
-            </a>
             <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
                 <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Maintenance</span>
@@ -80,9 +76,6 @@
                         <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-md text-emerald-700 text-sm">
                             <span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
                             My Account
-                        </a>
-                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
-                            Banks & Cards
                         </a>
                         <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
                             Billing History
@@ -112,9 +105,6 @@
                         </button>
                         <button class="pb-3 px-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors" onclick="switchTab('notifications')">
                             Notification Preferences
-                        </button>
-                        <button class="pb-3 px-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors" onclick="switchTab('messages')">
-                            Message Preferences
                         </button>
                     </div>
                 </div>
@@ -268,38 +258,6 @@
                         </div>
                     </div>
 
-                    <!-- Recent Logins Section -->
-                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <h2 class="text-lg font-medium text-zinc-900">Recent Logins</h2>
-                            <iconify-icon icon="lucide:chevron-down" width="20" class="text-zinc-400"></iconify-icon>
-                        </div>
-                        <p class="text-sm text-zinc-600 mb-4">Your five most recent logins.</p>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead>
-                                    <tr class="border-b border-zinc-200">
-                                        <th class="text-left py-3 px-4 text-sm font-medium text-zinc-900">Device</th>
-                                        <th class="text-left py-3 px-4 text-sm font-medium text-zinc-900">Date</th>
-                                        <th class="text-left py-3 px-4 text-sm font-medium text-zinc-900">Location</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-b border-zinc-100">
-                                        <td class="py-3 px-4 text-sm text-zinc-700">MacOS</td>
-                                        <td class="py-3 px-4 text-sm text-zinc-700">Jan 12, 2026 5:15:52 PM (EST)</td>
-                                        <td class="py-3 px-4 text-sm text-zinc-700">Santiago, 2800:200:e480:204:8d</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="mt-4">
-                            <button class="px-4 py-2 rounded-md border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 transition-colors text-sm font-medium">
-                                Log Out Everywhere
-                            </button>
-                        </div>
-                    </div>
-
                     <!-- Account Data Section -->
                     <div class="bg-white rounded-lg border border-zinc-200 p-6">
                         <div class="flex items-center justify-between mb-4">
@@ -340,11 +298,6 @@
                         <!-- Communication Channels -->
                         <div class="flex gap-6 mb-8">
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
-                                <iconify-icon icon="lucide:message-square" width="20" class="text-zinc-600"></iconify-icon>
-                                <span class="text-sm text-zinc-700">SMS</span>
-                            </label>
-                            <label class="flex items-center gap-3 cursor-pointer">
                                 <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500" checked>
                                 <iconify-icon icon="lucide:mail" width="20" class="text-zinc-600"></iconify-icon>
                                 <span class="text-sm text-zinc-700">Email</span>
@@ -376,133 +329,9 @@
                             </div>
                         </div>
 
-                        <!-- Properties and Listings Section -->
-                        <div class="border-t border-zinc-200 pt-6 mb-6">
-                            <h3 class="text-sm font-medium text-zinc-900 mb-4">Properties and Listings</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex items-start justify-between mb-2">
-                                        <div>
-                                            <p class="text-sm font-medium text-zinc-900">Property Reviews</p>
-                                            <p class="text-sm text-zinc-600">New reviews of my property</p>
-                                        </div>
-                                        <label class="flex items-center gap-2 cursor-pointer">
-                                            <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Rental Search Section -->
-                        <div class="border-t border-zinc-200 pt-6 mb-6">
-                            <h3 class="text-sm font-medium text-zinc-900 mb-4">Rental Search</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex items-start justify-between mb-2">
-                                        <div>
-                                            <p class="text-sm font-medium text-zinc-900">Saved Searches</p>
-                                            <p class="text-sm text-zinc-600">New properties that fit my saved searches</p>
-                                        </div>
-                                        <label class="flex items-center gap-2 cursor-pointer">
-                                            <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Favorited Rentals Section -->
-                        <div class="border-t border-zinc-200 pt-6 mb-6">
-                            <h3 class="text-sm font-medium text-zinc-900 mb-4">Favorited Rentals</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex items-start justify-between mb-2">
-                                        <div>
-                                            <p class="text-sm font-medium text-zinc-900">Updates to rentals I've favorited</p>
-                                        </div>
-                                        <label class="flex items-center gap-2 cursor-pointer">
-                                            <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500">
-                                        </label>
-                                    </div>
-                                    <div class="mt-3">
-                                        <input type="text" value="Immediately" disabled class="w-full md:w-48 px-4 py-2 rounded-md border border-zinc-200 bg-zinc-100 text-zinc-500 cursor-not-allowed">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Disclaimer -->
-                        <div class="border-t border-zinc-200 pt-6">
-                            <p class="text-sm text-zinc-600">
-                                By selecting SMS, you agree to receive service and informational text messages from Rental Manager and our partners and agree to our <a href="#" class="text-blue-600 hover:text-blue-700 underline">Terms of Service</a>.
-                            </p>
-                        </div>
                     </div>
                 </div>
 
-                <!-- Message Preferences Tab Content -->
-                <div id="messagesTab" class="hidden space-y-6">
-                    <div class="bg-white rounded-lg border border-zinc-200 p-6">
-                        <!-- Messaging Section -->
-                        <div class="mb-8">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex-1">
-                                    <h2 class="text-lg font-medium text-zinc-900 mb-2">Messaging</h2>
-                                    <p class="text-sm text-zinc-600">
-                                        When enabled, the 'Send Message' buttons on your listing detail pages routes inquiries directly to your Rental Manager Messaging inbox.
-                                    </p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer ml-4">
-                                    <input type="checkbox" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-emerald-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Unread Message Notifications Section -->
-                        <div class="border-t border-zinc-200 pt-6">
-                            <h2 class="text-lg font-medium text-zinc-900 mb-6">Unread Message Notifications</h2>
-                            
-                            <div class="space-y-6">
-                                <!-- Email -->
-                                <div class="flex items-start justify-between">
-                                    <div class="flex-1">
-                                        <p class="text-sm font-medium text-zinc-900 mb-1">Email</p>
-                                    </div>
-                                    <label class="relative inline-flex items-center cursor-pointer ml-4">
-                                        <input type="checkbox" class="sr-only peer" checked>
-                                        <div class="w-11 h-6 bg-emerald-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
-                                    </label>
-                                </div>
-
-                                <!-- Push Notification -->
-                                <div class="flex items-start justify-between">
-                                    <div class="flex-1">
-                                        <p class="text-sm font-medium text-zinc-900 mb-1">Push Notification</p>
-                                        <p class="text-sm text-zinc-500">Coming soon!</p>
-                                    </div>
-                                    <label class="relative inline-flex items-center cursor-not-allowed ml-4 opacity-50">
-                                        <input type="checkbox" class="sr-only peer" disabled>
-                                        <div class="w-11 h-6 bg-zinc-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
-                                    </label>
-                                </div>
-
-                                <!-- SMS -->
-                                <div class="flex items-start justify-between">
-                                    <div class="flex-1">
-                                        <p class="text-sm font-medium text-zinc-900 mb-1">SMS</p>
-                                        <p class="text-sm text-zinc-500">Coming soon!</p>
-                                    </div>
-                                    <label class="relative inline-flex items-center cursor-not-allowed ml-4 opacity-50">
-                                        <input type="checkbox" class="sr-only peer" disabled>
-                                        <div class="w-11 h-6 bg-zinc-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
@@ -524,7 +353,6 @@
             // Hide all tabs
             document.getElementById('accountTab').classList.add('hidden');
             document.getElementById('notificationsTab').classList.add('hidden');
-            document.getElementById('messagesTab').classList.add('hidden');
             
             // Remove active styling from all tab buttons
             const tabButtons = document.querySelectorAll('[onclick^="switchTab"]');
@@ -542,10 +370,6 @@
                 document.getElementById('notificationsTab').classList.remove('hidden');
                 tabButtons[1].classList.add('border-b-2', 'border-emerald-600', 'text-zinc-900');
                 tabButtons[1].classList.remove('text-zinc-500');
-            } else if (tabName === 'messages') {
-                document.getElementById('messagesTab').classList.remove('hidden');
-                tabButtons[2].classList.add('border-b-2', 'border-emerald-600', 'text-zinc-900');
-                tabButtons[2].classList.remove('text-zinc-500');
             }
         }
 

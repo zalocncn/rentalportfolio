@@ -178,24 +178,6 @@
                 }
             }
             
-            // Add unit description if available
-            if (savedData.unit?.description) {
-                const amenitiesSection = document.querySelectorAll('h2.text-lg.font-medium');
-                const unitAmenitiesSection = Array.from(amenitiesSection).find(h => 
-                    h.textContent === 'Amenities' && !h.nextElementSibling?.textContent?.includes('Property Amenities')
-                )?.closest('.border');
-                if (unitAmenitiesSection && savedData.unit.description) {
-                    // Add description below amenities
-                    const existingContent = unitAmenitiesSection.innerHTML;
-                    const descriptionHtml = `
-                        <div class="mt-4 pt-4 border-t border-zinc-200">
-                            <p class="text-sm font-medium text-zinc-700 mb-2">Unit Description</p>
-                            <p class="text-sm text-zinc-600 leading-relaxed">${savedData.unit.description}</p>
-                        </div>
-                    `;
-                    unitAmenitiesSection.innerHTML = existingContent + descriptionHtml;
-                }
-            }
 
             // Update Property Amenities section (if exists)
             if (savedData.propertyAmenities || savedData.utilities || savedData.parking || savedData.laundry || savedData.pets) {
@@ -237,54 +219,6 @@
                 }
             }
 
-            // Update Description section
-            if (savedData.description) {
-                const descriptionSection = Array.from(document.querySelectorAll('h2.text-lg.font-medium')).find(h => 
-                    h.textContent === 'Description'
-                )?.closest('.border');
-                if (descriptionSection) {
-                    const descText = descriptionSection.querySelector('p.text-sm.text-zinc-600');
-                    if (descText && savedData.description.text) {
-                        descText.textContent = savedData.description.text;
-                    }
-                }
-            }
-
-            // Update Contact Info section
-            if (savedData.contact) {
-                const contactSection = Array.from(document.querySelectorAll('h2.text-lg.font-medium')).find(h => 
-                    h.textContent === 'Contact Info'
-                )?.closest('.border');
-                if (contactSection) {
-                    const contactInfo = contactSection.querySelectorAll('p.text-zinc-900.font-medium');
-                    if (contactInfo.length >= 4 && savedData.contact) {
-                        const name = `${savedData.contact.firstName || ''} ${savedData.contact.lastName || ''}`.trim();
-                        if (name) contactInfo[0].textContent = name;
-                        if (savedData.contact.role) contactInfo[1].textContent = savedData.contact.role.charAt(0).toUpperCase() + savedData.contact.role.slice(1);
-                        if (savedData.contact.email) contactInfo[2].textContent = savedData.contact.email;
-                        if (savedData.contact.phone) contactInfo[3].textContent = savedData.contact.phone;
-                    }
-                }
-            }
-
-            // Update Agreement section checkbox
-            if (savedData.applications) {
-                const applicationsSection = Array.from(document.querySelectorAll('h2.text-lg.font-medium')).find(h => 
-                    h.textContent === 'Agreement'
-                )?.closest('.border');
-                if (applicationsSection) {
-                    const agreementCheckbox = document.getElementById('agreementCheckbox');
-                    if (agreementCheckbox) {
-                        // Only override default checked state if saved data explicitly sets it to false
-                        if (savedData.applications.agreementAccepted === false) {
-                            agreementCheckbox.checked = false;
-                        }
-                        // Otherwise keep the default checked state
-                        // Validate after setting checkbox state
-                        validateAgreement();
-                    }
-                }
-            }
         }
 
         // Load data when page loads
@@ -354,10 +288,6 @@
                 <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Payments</span>
             </a>
-            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
-                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
-                <span class="text-sm font-medium">Residents & Leases</span>
-            </a>
             <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
                 <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Maintenance</span>
@@ -381,9 +311,6 @@
                         <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
                             My Account
                         </a>
-                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
-                            Banks & Cards
-                        </a>
                         <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
                             Billing History
                         </a>
@@ -405,48 +332,23 @@
                 <div class="bg-white rounded-lg border border-zinc-200 shadow-sm p-8">
                     <div class="mb-8">
                         <h1 class="text-2xl font-medium tracking-tight text-zinc-900 mb-2">Create Rental</h1>
-                        <div class="flex items-center gap-2 text-sm text-zinc-500">
-                            <span class="font-medium">Step 6 of 6: Review</span>
+                        <div class="flex items-center gap-2 text-sm text-zinc-500 mb-4">
+                            <span class="font-medium">Step 4 of 4: Review</span>
                             <span>•</span>
                             <span>Review your information before you publish.</span>
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                        <!-- Left Sidebar - Steps -->
-                        <div class="lg:col-span-1">
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-3">
-                                    <iconify-icon icon="lucide:check-circle" width="20" class="text-emerald-600"></iconify-icon>
-                                    <span class="text-sm font-medium text-zinc-900">Basics</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <iconify-icon icon="lucide:check-circle" width="20" class="text-emerald-600"></iconify-icon>
-                                    <span class="text-sm font-medium text-zinc-900">Amenities</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <iconify-icon icon="lucide:check-circle" width="20" class="text-emerald-600"></iconify-icon>
-                                    <span class="text-sm font-medium text-zinc-900">Media</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <iconify-icon icon="lucide:check-circle" width="20" class="text-emerald-600"></iconify-icon>
-                                    <span class="text-sm font-medium text-zinc-900">Description</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <iconify-icon icon="lucide:check-circle" width="20" class="text-emerald-600"></iconify-icon>
-                                    <span class="text-sm font-medium text-zinc-900">Contact</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-5 h-5 rounded-full bg-emerald-600 flex items-center justify-center">
-                                        <span class="flex h-2 w-2 rounded-full bg-white"></span>
-                                    </div>
-                                    <span class="text-sm font-medium text-zinc-900">Review</span>
-                                </div>
+                        
+                        <!-- Horizontal Progress Bar -->
+                        <div class="w-full">
+                            <div class="w-full h-1 bg-zinc-200 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-600 rounded-full transition-all duration-300" style="width: 100%"></div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Right Side - Review Sections -->
-                        <div class="lg:col-span-3 space-y-6">
+                    <div>
+                        <!-- Review Sections -->
+                        <div class="space-y-6">
                             <!-- Basics Section -->
                             <div class="border border-zinc-200 rounded-lg p-6">
                                 <div class="flex items-start justify-between mb-4">
@@ -480,14 +382,6 @@
                                             <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop" alt="Property photo" class="w-full h-full object-cover" id="defaultPhoto">
                                         </div>
                                     </div>
-                                    <div>
-                                        <h3 class="text-sm font-medium text-zinc-700 mb-1">Virtual Tours (0)</h3>
-                                        <p class="text-sm text-zinc-500">-</p>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-sm font-medium text-zinc-700 mb-1">Videos (0)</h3>
-                                        <p class="text-sm text-zinc-500">-</p>
-                                    </div>
                                 </div>
                             </div>
 
@@ -513,90 +407,15 @@
                                 </div>
                             </div>
 
-                            <!-- Description Section -->
-                            <div class="border border-zinc-200 rounded-lg p-6">
-                                <div class="flex items-start justify-between mb-4">
-                                    <h2 class="text-lg font-medium text-zinc-900">Description</h2>
-                                    <a href="create-listing-step4.html" class="text-sm text-emerald-600 hover:text-emerald-700 font-medium">Edit Section</a>
-                                </div>
-                                <div class="space-y-3">
-                                    <div>
-                                        <p class="text-sm font-medium text-zinc-700 mb-1">Description</p>
-                                        <p class="text-sm text-zinc-600 leading-relaxed">So many great things about this property and so spacious, bright, open concept, modern, minimalistic.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Contact Info Section -->
-                            <div class="border border-zinc-200 rounded-lg p-6">
-                                <div class="flex items-start justify-between mb-4">
-                                    <h2 class="text-lg font-medium text-zinc-900">Contact Info</h2>
-                                    <a href="create-listing-step5.html" class="text-sm text-emerald-600 hover:text-emerald-700 font-medium">Edit Section</a>
-                                </div>
-                                <div class="space-y-3 text-sm">
-                                    <div>
-                                        <p class="text-zinc-500 mb-1">Name</p>
-                                        <p class="text-zinc-900 font-medium">Rita Noriega</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-zinc-500 mb-1">Role</p>
-                                        <p class="text-zinc-900 font-medium">Owner</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-zinc-500 mb-1">Email address</p>
-                                        <p class="text-zinc-900 font-medium">zalocn@gmail.com</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-zinc-500 mb-1">Phone number</p>
-                                        <p class="text-zinc-900 font-medium">(828) 938-3892</p>
-                                    </div>
-                                    <div class="mt-4 p-3 bg-zinc-50 rounded-md border border-zinc-200">
-                                        <p class="text-xs text-zinc-600">
-                                            Your listing will display a forwarding phone number to hide your real phone number. 
-                                            <a href="#" class="text-blue-600 hover:text-blue-700 underline">Learn more</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Agreement Section -->
-                            <div class="border border-zinc-200 rounded-lg p-6">
-                                <div class="flex items-start justify-between mb-4">
-                                    <h2 class="text-lg font-medium text-zinc-900">Agreement</h2>
-                                </div>
-                                <div class="space-y-6">
-                                    <div class="border-t border-zinc-200 pt-6">
-                                        <label class="flex items-start gap-3 cursor-pointer">
-                                            <input type="checkbox" id="agreementCheckbox" class="mt-0.5 w-4 h-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500" checked>
-                                            <span class="text-sm text-zinc-700">
-                                                By checking this box I agree as follows: I agree that I will provide accurate and 
-                                                <a href="#" class="text-blue-600 hover:text-blue-700 underline">non discriminatory</a> 
-                                                information and I will comply with the Apartments.com 
-                                                <a href="#" class="text-blue-600 hover:text-blue-700 underline">Terms and Conditions</a> 
-                                                and the 
-                                                <a href="#" class="text-blue-600 hover:text-blue-700 underline">Add a Property Terms of Service</a>.
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
-                    <!-- Legal Disclaimer -->
-                    <div class="mt-8 pt-6 border-t border-zinc-200">
-                        <div class="text-xs text-zinc-500 leading-relaxed">
-                            <p>
-                                By clicking Add Your Property above, I agree that I will provide accurate and <a href="#" class="text-blue-600 hover:text-blue-700 underline">non discriminatory information</a> and I will comply with the Apartments.com <a href="#" class="text-blue-600 hover:text-blue-700 underline">Terms and Conditions</a> and the <a href="#" class="text-blue-600 hover:text-blue-700 underline">Add a Property Terms of Service</a>. This site is protected by reCAPTCHA and the <a href="#" class="text-blue-600 hover:text-blue-700 underline">Google Privacy Policy</a> and <a href="#" class="text-blue-600 hover:text-blue-700 underline">Terms of Service</a> apply.
-                            </p>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Navigation Buttons -->
                 <div class="mt-6">
                     <div class="flex justify-between">
-                        <a href="create-listing-step5.html" onclick="sessionStorage.setItem('creatingListing', 'true')" class="px-6 py-2.5 rounded-md border border-emerald-600 text-emerald-600 font-medium text-sm hover:bg-emerald-50 transition-colors flex items-center gap-2">
+                        <a href="create-listing-step3.html" onclick="sessionStorage.setItem('creatingListing', 'true')" class="px-6 py-2.5 rounded-md border border-emerald-600 text-emerald-600 font-medium text-sm hover:bg-emerald-50 transition-colors flex items-center gap-2">
                             <iconify-icon icon="lucide:arrow-left" width="16"></iconify-icon>
                             Previous
                         </a>
@@ -604,10 +423,6 @@
                             <span id="publishButtonText">Create Rental</span>
                             <iconify-icon icon="lucide:check" width="16"></iconify-icon>
                         </button>
-                    </div>
-                    <div id="agreementWarning" class="hidden mt-3 text-sm text-red-600 flex items-center gap-2 justify-end">
-                        <iconify-icon icon="lucide:alert-circle" width="16"></iconify-icon>
-                        <span>You must agree to the terms and conditions before creating a rental.</span>
                     </div>
                 </div>
             </div>
@@ -686,25 +501,9 @@
             // Extract media info
             const mediaSection = amenitiesSections.find(h => h.textContent === 'Media')?.closest('.border');
             const photosCount = mediaSection?.querySelector('h3')?.textContent?.match(/\((\d+)\)/)?.[1] || (listingData.media?.photos?.toString() || '1');
-            const virtualToursCount = Array.from(mediaSection?.querySelectorAll('h3') || [])[1]?.textContent?.match(/\((\d+)\)/)?.[1] || (listingData.media?.virtualTours?.toString() || '0');
-            const videosCount = Array.from(mediaSection?.querySelectorAll('h3') || [])[2]?.textContent?.match(/\((\d+)\)/)?.[1] || (listingData.media?.videos?.toString() || '0');
-            
-            // Extract description
-            const descriptionSection = amenitiesSections.find(h => h.textContent === 'Description')?.closest('.border');
-            const descriptionText = descriptionSection?.querySelector('p.text-sm.text-zinc-600')?.textContent?.trim() || listingData.description?.text || '';
-            
-            // Extract contact info
-            const contactSection = amenitiesSections.find(h => h.textContent === 'Contact Info')?.closest('.border');
-            const contactInfo = Array.from(contactSection?.querySelectorAll('p.text-zinc-900.font-medium') || []);
-            const contactName = contactInfo[0]?.textContent?.trim() || `${listingData.contact?.firstName || 'Rita'} ${listingData.contact?.lastName || 'Noriega'}`;
-            const contactRole = contactInfo[1]?.textContent?.trim() || listingData.contact?.role || 'Owner';
-            const contactEmail = contactInfo[2]?.textContent?.trim() || listingData.contact?.email || 'zalocn@gmail.com';
-            const contactPhone = contactInfo[3]?.textContent?.trim() || listingData.contact?.phone || '';
-            const nameParts = contactName.split(' ');
             
             // Extract applications settings
-            const agreementCheckbox = document.getElementById('agreementCheckbox');
-            const agreementAccepted = agreementCheckbox?.checked || false;
+            const agreementAccepted = true; // Agreement checkbox removed, always accepted
             
             // Build/update listing data object, merging saved data with extracted values
             listingData = {
@@ -736,20 +535,8 @@
                 media: {
                     ...listingData.media,
                     photos: parseInt(photosCount),
-                    virtualTours: parseInt(virtualToursCount),
-                    videos: parseInt(videosCount)
-                },
-                description: {
-                    ...listingData.description,
-                    text: descriptionText
-                },
-                contact: {
-                    ...listingData.contact,
-                    firstName: nameParts[0] || listingData.contact?.firstName || 'Rita',
-                    lastName: nameParts.slice(1).join(' ') || listingData.contact?.lastName || 'Noriega',
-                    role: contactRole.toLowerCase(),
-                    email: contactEmail,
-                    phone: contactPhone
+                    virtualTours: listingData.media?.virtualTours || 0,
+                    videos: listingData.media?.videos || 0
                 },
                 applications: {
                     enabled: listingData.applications?.enabled || false,

@@ -57,10 +57,6 @@
                 <iconify-icon icon="lucide:wallet" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Payments</span>
             </a>
-            <a href="leases.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
-                <iconify-icon icon="lucide:file-text" width="18" stroke-width="1.5"></iconify-icon>
-                <span class="text-sm font-medium">Residents & Leases</span>
-            </a>
             <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors">
                 <iconify-icon icon="lucide:wrench" width="18" stroke-width="1.5"></iconify-icon>
                 <span class="text-sm font-medium">Maintenance</span>
@@ -83,9 +79,6 @@
                     <div class="account-submenu hidden mt-1 ml-4 space-y-1">
                         <a href="my-account.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
                             My Account
-                        </a>
-                        <a href="banks-cards.html" class="flex items-center gap-3 px-3 py-2 text-zinc-600 hover:bg-zinc-50 rounded-md transition-colors text-sm">
-                            Banks & Cards
                         </a>
                         <a href="billing-history.html" class="flex items-center gap-3 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-md text-emerald-700 text-sm">
                             <span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
@@ -133,36 +126,27 @@
                 </div>
             </div>
 
-            <!-- Search Bar and Quick Actions -->
-            <div class="mb-6 flex items-end gap-4">
-                <div class="flex-1">
-                    <label class="block text-sm font-medium text-zinc-900 mb-2">Search</label>
-                    <div class="relative">
-                        <input 
-                            type="text" 
-                            id="propertySearchInput"
-                            placeholder="Street address" 
-                            class="w-full px-4 py-2.5 pr-10 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                            autocomplete="off"
-                            oninput="handlePropertySearch(event)"
-                            onfocus="showPropertyDropdown()"
-                        >
-                        <iconify-icon icon="lucide:search" width="20" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"></iconify-icon>
-                        
-                        <!-- Property Dropdown -->
-                        <div id="propertyDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-md shadow-lg z-50 max-h-96 overflow-y-auto">
-                            <div id="propertyDropdownContent" class="p-2">
-                                <!-- Properties will be loaded here -->
-                            </div>
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-zinc-900 mb-2">Search</label>
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="propertySearchInput"
+                        placeholder="Street address" 
+                        class="w-full px-4 py-2.5 pr-10 rounded-md border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                        autocomplete="off"
+                        oninput="handlePropertySearch(event)"
+                        onfocus="showPropertyDropdown()"
+                    >
+                    <iconify-icon icon="lucide:search" width="20" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"></iconify-icon>
+                    
+                    <!-- Property Dropdown -->
+                    <div id="propertyDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-md shadow-lg z-50 max-h-96 overflow-y-auto">
+                        <div id="propertyDropdownContent" class="p-2">
+                            <!-- Properties will be loaded here -->
                         </div>
                     </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-zinc-900 mb-2">&nbsp;</label>
-                    <button class="px-4 py-2.5 rounded-md border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 transition-colors flex items-center gap-2 text-sm font-medium">
-                        Quick Actions
-                        <iconify-icon icon="lucide:chevron-down" width="16" class="text-zinc-400"></iconify-icon>
-                    </button>
                 </div>
             </div>
 
@@ -200,34 +184,6 @@
 
                         <!-- Property Sections -->
                         <div class="space-y-4">
-                            <!-- Advertising Section -->
-                            <div class="flex items-center justify-between py-3 border-b border-zinc-100">
-                                <div class="flex items-center gap-3">
-                                    <iconify-icon icon="lucide:megaphone" width="20" class="text-zinc-500"></iconify-icon>
-                                    <div>
-                                        <span class="text-sm font-medium text-zinc-900">Advertising</span>
-                                        <p class="text-xs text-zinc-500 mt-0.5">Listing: Off</p>
-                                    </div>
-                                </div>
-                                <button class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
-                                    Manage
-                                </button>
-                            </div>
-
-                            <!-- Screening Section -->
-                            <div class="flex items-center justify-between py-3 border-b border-zinc-100">
-                                <div class="flex items-center gap-3">
-                                    <iconify-icon icon="lucide:file-text" width="20" class="text-zinc-500"></iconify-icon>
-                                    <div>
-                                        <span class="text-sm font-medium text-zinc-900">Screening</span>
-                                        <p class="text-xs text-zinc-500 mt-0.5">0 applications</p>
-                                    </div>
-                                </div>
-                                <button class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
-                                    Invite renter
-                                </button>
-                            </div>
-
                             <!-- Residents Section -->
                             <div class="flex items-center justify-between py-3">
                                 <div class="flex items-center gap-3">
@@ -237,7 +193,7 @@
                                         <p class="text-xs text-zinc-500 mt-0.5">Vacant</p>
                                     </div>
                                 </div>
-                                <button class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
+                                <button onclick="window.location.href='set-up-residents.html?propertyId=default-1'" class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
                                     Set up resident or payment
                                 </button>
                             </div>
@@ -516,34 +472,6 @@
 
                     <!-- Property Sections -->
                     <div class="space-y-4">
-                        <!-- Advertising Section -->
-                        <div class="flex items-center justify-between py-3 border-b border-zinc-100">
-                            <div class="flex items-center gap-3">
-                                <iconify-icon icon="lucide:megaphone" width="20" class="text-zinc-500"></iconify-icon>
-                                <div>
-                                    <span class="text-sm font-medium text-zinc-900">Advertising</span>
-                                    <p class="text-xs text-zinc-500 mt-0.5">Listing: ${listingStatus}</p>
-                                </div>
-                            </div>
-                            <button class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
-                                Manage
-                            </button>
-                        </div>
-
-                        <!-- Screening Section -->
-                        <div class="flex items-center justify-between py-3 border-b border-zinc-100">
-                            <div class="flex items-center gap-3">
-                                <iconify-icon icon="lucide:file-text" width="20" class="text-zinc-500"></iconify-icon>
-                                <div>
-                                    <span class="text-sm font-medium text-zinc-900">Screening</span>
-                                    <p class="text-xs text-zinc-500 mt-0.5">${applicationsCount} application${applicationsCount !== 1 ? 's' : ''}</p>
-                                </div>
-                            </div>
-                            <button class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
-                                Invite renter
-                            </button>
-                        </div>
-
                         <!-- Residents Section -->
                         <div class="flex items-center justify-between py-3">
                             <div class="flex items-center gap-3">
@@ -553,7 +481,7 @@
                                     <p class="text-xs text-zinc-500 mt-0.5">${residentStatus}</p>
                                 </div>
                             </div>
-                            <button class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
+                            <button onclick="window.location.href='set-up-residents.html?propertyId=${listing.id}'" class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
                                 Set up resident or payment
                             </button>
                         </div>
