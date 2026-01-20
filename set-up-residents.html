@@ -334,8 +334,11 @@
                     </button>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="flex justify-between gap-4">
+            </div>
+            
+            <!-- Action Buttons - Sticky at bottom -->
+            <div class="sticky bottom-0 bg-white border-t border-zinc-200 shadow-lg -mx-6 px-6 py-4 mt-8">
+                <div class="max-w-4xl mx-auto flex justify-between gap-4">
                     <button 
                         type="button"
                         onclick="cancelSetup()" 
@@ -345,8 +348,9 @@
                     </button>
                     <button 
                         type="button"
+                        id="finishButton"
                         onclick="finishSetup()" 
-                        class="px-6 py-3 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors"
+                        class="px-6 py-3 rounded-md bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         Finish
                     </button>
@@ -595,6 +599,12 @@
 
         // Finish setup
         function finishSetup() {
+            const finishButton = document.getElementById('finishButton');
+            if (finishButton) {
+                finishButton.disabled = true;
+                finishButton.textContent = 'Processing...';
+            }
+            
             try {
                 console.log('finishSetup called');
                 // Get property ID from URL or sessionStorage
@@ -606,6 +616,10 @@
                 
                 if (!propertyId) {
                     alert('Property ID is required. Please navigate from a property page.');
+                    if (finishButton) {
+                        finishButton.disabled = false;
+                        finishButton.textContent = 'Finish';
+                    }
                     return;
                 }
             
@@ -629,6 +643,10 @@
                 alert('Please select a lease start date.');
                 document.getElementById('leaseStartDate')?.focus();
                 document.getElementById('leaseStartDate')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (finishButton) {
+                    finishButton.disabled = false;
+                    finishButton.textContent = 'Finish';
+                }
                 return;
             }
 
@@ -641,6 +659,10 @@
                 alert('Please select a lease end date for fixed term leases.');
                 document.getElementById('leaseEndDate')?.focus();
                 document.getElementById('leaseEndDate')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (finishButton) {
+                    finishButton.disabled = false;
+                    finishButton.textContent = 'Finish';
+                }
                 return;
             }
 
@@ -724,6 +746,10 @@
             }
 
             if (validationError) {
+                if (finishButton) {
+                    finishButton.disabled = false;
+                    finishButton.textContent = 'Finish';
+                }
                 return;
             }
 
@@ -741,6 +767,10 @@
                         firstNameInput?.focus();
                         firstResidentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
+                }
+                if (finishButton) {
+                    finishButton.disabled = false;
+                    finishButton.textContent = 'Finish';
                 }
                 return;
             }
@@ -781,20 +811,26 @@
             localStorage.setItem('residents', JSON.stringify(existingResidents));
 
                 // Save resident setup data (for form recovery)
-                saveResidentData();
+                try {
+                    saveResidentData();
+                } catch (saveError) {
+                    console.warn('Error saving resident data (non-critical):', saveError);
+                    // Continue with redirect even if save fails
+                }
 
-                console.log('Redirecting to dashboard...');
-                // Navigate to dashboard - use multiple methods to ensure redirect happens
+                console.log('All data saved. Redirecting to dashboard...');
+                
+                // Immediately redirect to dashboard
                 window.location.href = 'dashboard.html';
-                // Fallback redirect in case the first one doesn't work
-                setTimeout(() => {
-                    if (window.location.pathname.includes('set-up-residents')) {
-                        window.location.replace('dashboard.html');
-                    }
-                }, 500);
             } catch (error) {
                 console.error('Error in finishSetup:', error);
                 alert('An error occurred. Please try again.');
+                // Re-enable button on error
+                const finishButton = document.getElementById('finishButton');
+                if (finishButton) {
+                    finishButton.disabled = false;
+                    finishButton.textContent = 'Finish';
+                }
             }
         }
 
