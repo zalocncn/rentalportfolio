@@ -503,92 +503,104 @@
             saveResidentData();
         }
 
-        // Save resident data
-        function saveResidentData() {
-            // Get property ID from URL or sessionStorage
-            const urlParams = new URLSearchParams(window.location.search);
-            const propertyId = urlParams.get('propertyId') || sessionStorage.getItem('selectedPropertyId');
-            let propertyAddress = sessionStorage.getItem('selectedPropertyAddress');
-            
-            if (!propertyId) return;
-            
-            // If property address is not in sessionStorage, get it from property data
-            if (!propertyAddress) {
-                if (propertyId === 'default-1') {
-                    propertyAddress = '214 Via Robina, San Clemente, CA 92672';
-                } else {
-                    const property = ListingStorage.getListingById(propertyId);
-                    if (property) {
-                        propertyAddress = property.address || '';
+        // Save resident data - explicitly attach to window for global access
+        window.saveResidentData = function saveResidentData() {
+            try {
+                // Get property ID from URL or sessionStorage
+                const urlParams = new URLSearchParams(window.location.search);
+                const propertyId = urlParams.get('propertyId') || sessionStorage.getItem('selectedPropertyId');
+                let propertyAddress = sessionStorage.getItem('selectedPropertyAddress');
+                
+                if (!propertyId) return;
+                
+                // If property address is not in sessionStorage, get it from property data
+                if (!propertyAddress) {
+                    if (propertyId === 'default-1') {
+                        propertyAddress = '214 Via Robina, San Clemente, CA 92672';
+                    } else {
+                        // Check if ListingStorage is available
+                        if (typeof ListingStorage !== 'undefined' && ListingStorage && ListingStorage.getListingById) {
+                            try {
+                                const property = ListingStorage.getListingById(propertyId);
+                                if (property) {
+                                    propertyAddress = property.address || '';
+                                }
+                            } catch (e) {
+                                console.warn('Error getting property from ListingStorage:', e);
+                            }
+                        }
+                    }
+                    if (propertyAddress) {
+                        sessionStorage.setItem('selectedPropertyAddress', propertyAddress);
                     }
                 }
-                if (propertyAddress) {
-                    sessionStorage.setItem('selectedPropertyAddress', propertyAddress);
-                }
+
+                const leaseType = document.querySelector('input[name="leaseType"]:checked')?.value || 'fixed';
+                const leaseStartDate = document.getElementById('leaseStartDate')?.value || '';
+                const leaseEndDate = document.getElementById('leaseEndDate')?.value || '';
+                const monthlyRent = document.getElementById('monthlyRent')?.value || '';
+                const deposit = document.getElementById('deposit')?.value || '';
+                const leaseLength = document.getElementById('leaseLength')?.value || '12';
+                const parkingFee = document.getElementById('parkingFee')?.value || '';
+
+                const residents = [];
+                const residentForms = document.querySelectorAll('.resident-form');
+                
+                residentForms.forEach((form, index) => {
+                    const type = document.getElementById(`residentType${index}`)?.value || 'resident';
+                    const firstName = document.getElementById(`firstName${index}`)?.value || '';
+                    const middleName = document.getElementById(`middleName${index}`)?.value || '';
+                    const lastName = document.getElementById(`lastName${index}`)?.value || '';
+                    const email = document.getElementById(`email${index}`)?.value || '';
+                    const phone = document.getElementById(`phone${index}`)?.value || '';
+
+                    if (firstName || lastName || email) {
+                        residents.push({
+                            type,
+                            firstName,
+                            middleName,
+                            lastName,
+                            email,
+                            phone,
+                            property: propertyAddress,
+                            propertyId: propertyId,
+                            unit: '',
+                            leaseStartDate,
+                            leaseEndDate,
+                            leaseType
+                        });
+                    }
+                });
+
+                const residentData = {
+                    propertyId,
+                    propertyAddress,
+                    leaseType,
+                    leaseStartDate,
+                    leaseEndDate,
+                    monthlyRent,
+                    deposit,
+                    leaseLength,
+                    parkingFee,
+                    residents,
+                    updatedAt: new Date().toISOString()
+                };
+
+                // Save temporary data for form recovery
+                localStorage.setItem('residentSetupData', JSON.stringify(residentData));
+                
+                // Also save to property-specific storage (keyed by property ID)
+                const allPropertyResidents = JSON.parse(localStorage.getItem('propertyResidents') || '{}');
+                allPropertyResidents[propertyId] = {
+                    ...residentData,
+                    updatedAt: new Date().toISOString()
+                };
+                localStorage.setItem('propertyResidents', JSON.stringify(allPropertyResidents));
+            } catch (error) {
+                console.error('Error in saveResidentData:', error);
+                // Silently fail to prevent breaking the form
             }
-
-            const leaseType = document.querySelector('input[name="leaseType"]:checked')?.value || 'fixed';
-            const leaseStartDate = document.getElementById('leaseStartDate')?.value || '';
-            const leaseEndDate = document.getElementById('leaseEndDate')?.value || '';
-            const monthlyRent = document.getElementById('monthlyRent')?.value || '';
-            const deposit = document.getElementById('deposit')?.value || '';
-            const leaseLength = document.getElementById('leaseLength')?.value || '12';
-            const parkingFee = document.getElementById('parkingFee')?.value || '';
-
-            const residents = [];
-            const residentForms = document.querySelectorAll('.resident-form');
-            
-            residentForms.forEach((form, index) => {
-                const type = document.getElementById(`residentType${index}`)?.value || 'resident';
-                const firstName = document.getElementById(`firstName${index}`)?.value || '';
-                const middleName = document.getElementById(`middleName${index}`)?.value || '';
-                const lastName = document.getElementById(`lastName${index}`)?.value || '';
-                const email = document.getElementById(`email${index}`)?.value || '';
-                const phone = document.getElementById(`phone${index}`)?.value || '';
-
-                if (firstName || lastName || email) {
-                    residents.push({
-                        type,
-                        firstName,
-                        middleName,
-                        lastName,
-                        email,
-                        phone,
-                        property: propertyAddress,
-                        propertyId: propertyId,
-                        unit: '',
-                        leaseStartDate,
-                        leaseEndDate,
-                        leaseType
-                    });
-                }
-            });
-
-            const residentData = {
-                propertyId,
-                propertyAddress,
-                leaseType,
-                leaseStartDate,
-                leaseEndDate,
-                monthlyRent,
-                deposit,
-                leaseLength,
-                parkingFee,
-                residents,
-                updatedAt: new Date().toISOString()
-            };
-
-            // Save temporary data for form recovery
-            localStorage.setItem('residentSetupData', JSON.stringify(residentData));
-            
-            // Also save to property-specific storage (keyed by property ID)
-            const allPropertyResidents = JSON.parse(localStorage.getItem('propertyResidents') || '{}');
-            allPropertyResidents[propertyId] = {
-                ...residentData,
-                updatedAt: new Date().toISOString()
-            };
-            localStorage.setItem('propertyResidents', JSON.stringify(allPropertyResidents));
-        }
+        };
 
         // Cancel setup
         function cancelSetup() {
