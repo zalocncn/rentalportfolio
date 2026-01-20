@@ -185,17 +185,22 @@
                         <!-- Property Sections -->
                         <div class="space-y-4">
                             <!-- Residents Section -->
-                            <div class="flex items-center justify-between py-3">
-                                <div class="flex items-center gap-3">
-                                    <iconify-icon icon="lucide:user" width="20" class="text-zinc-500"></iconify-icon>
-                                    <div>
-                                        <span class="text-sm font-medium text-zinc-900">Residents</span>
-                                        <p class="text-xs text-zinc-500 mt-0.5">Vacant</p>
+                            <div id="default-residents-section" class="border-b border-zinc-100 pb-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <iconify-icon icon="lucide:user" width="20" class="text-zinc-500"></iconify-icon>
+                                        <div>
+                                            <span class="text-sm font-medium text-zinc-900">Residents</span>
+                                            <p id="default-resident-status" class="text-xs text-zinc-500 mt-0.5">Vacant</p>
+                                        </div>
                                     </div>
+                                    <button onclick="window.location.href='set-up-residents.html?propertyId=default-1'" class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
+                                        Set up resident or payment
+                                    </button>
                                 </div>
-                                <button onclick="window.location.href='set-up-residents.html?propertyId=default-1'" class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
-                                    Set up resident or payment
-                                </button>
+                                <div id="default-resident-details" class="ml-8 space-y-2 hidden">
+                                    <!-- Resident details will be populated here -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -367,10 +372,65 @@
             }
         });
 
+        // Update default property card with resident data
+        function updateDefaultPropertyCard() {
+            const allPropertyResidents = JSON.parse(localStorage.getItem('propertyResidents') || '{}');
+            const defaultResidentData = allPropertyResidents['default-1'] || null;
+            
+            const statusEl = document.getElementById('default-resident-status');
+            const detailsEl = document.getElementById('default-resident-details');
+            const buttonEl = document.querySelector('button[onclick*="default-1"]');
+            
+            if (!statusEl || !detailsEl) return;
+            
+            if (defaultResidentData && defaultResidentData.residents && defaultResidentData.residents.length > 0) {
+                const residentCount = defaultResidentData.residents.length;
+                statusEl.textContent = `${residentCount} Resident${residentCount > 1 ? 's' : ''}`;
+                
+                if (buttonEl) {
+                    buttonEl.textContent = 'Edit resident or payment';
+                }
+                
+                // Build resident details HTML
+                let detailsHTML = '';
+                const residentList = defaultResidentData.residents.filter(r => r.type === 'resident');
+                residentList.forEach(resident => {
+                    const name = [resident.firstName, resident.middleName, resident.lastName].filter(Boolean).join(' ');
+                    detailsHTML += `<p class="text-sm text-zinc-700">${name}</p>`;
+                });
+                
+                if (defaultResidentData.monthlyRent) {
+                    detailsHTML += `<p class="text-sm text-zinc-600 mt-2"><span class="font-medium">Monthly Rent:</span> $${parseFloat(defaultResidentData.monthlyRent).toLocaleString()}</p>`;
+                }
+                if (defaultResidentData.deposit) {
+                    detailsHTML += `<p class="text-sm text-zinc-600"><span class="font-medium">Deposit:</span> $${parseFloat(defaultResidentData.deposit).toLocaleString()}</p>`;
+                }
+                if (defaultResidentData.leaseLength) {
+                    detailsHTML += `<p class="text-sm text-zinc-600"><span class="font-medium">Lease Length:</span> ${defaultResidentData.leaseLength} Months</p>`;
+                }
+                if (defaultResidentData.leaseStartDate) {
+                    detailsHTML += `<p class="text-sm text-zinc-600"><span class="font-medium">Lease Start:</span> ${new Date(defaultResidentData.leaseStartDate).toLocaleDateString()}</p>`;
+                }
+                if (defaultResidentData.leaseEndDate) {
+                    detailsHTML += `<p class="text-sm text-zinc-600"><span class="font-medium">Lease End:</span> ${new Date(defaultResidentData.leaseEndDate).toLocaleDateString()}</p>`;
+                }
+                
+                detailsEl.innerHTML = detailsHTML;
+                detailsEl.classList.remove('hidden');
+            } else {
+                statusEl.textContent = 'Vacant';
+                if (buttonEl) {
+                    buttonEl.textContent = 'Set up resident or payment';
+                }
+                detailsEl.classList.add('hidden');
+            }
+        }
+
         // Load stats when page loads
         document.addEventListener('DOMContentLoaded', function() {
             updateDashboardStats();
             loadSavedListings();
+            updateDefaultPropertyCard();
         });
 
         // Toggle property menu dropdown
@@ -400,6 +460,8 @@
                 loadSavedListings();
                 // Update stats
                 updateDashboardStats();
+                // Update default property card
+                updateDefaultPropertyCard();
             }
         }
 
@@ -428,6 +490,9 @@
                 }
             }
 
+            // Get all property resident data
+            const allPropertyResidents = JSON.parse(localStorage.getItem('propertyResidents') || '{}');
+
             // Add each saved listing
             listings.forEach(listing => {
                 const propertyCard = document.createElement('div');
@@ -441,7 +506,31 @@
                 const menuId = `menu-${listing.id}`;
                 const listingStatus = listing.status === 'active' ? 'On' : 'Off';
                 const applicationsCount = listing.applicationsCount || 0;
-                const residentStatus = listing.residentStatus || 'Vacant';
+                
+                // Get resident data for this property
+                const propertyResidentData = allPropertyResidents[listing.id] || null;
+                const residentStatus = propertyResidentData && propertyResidentData.residents && propertyResidentData.residents.length > 0 
+                    ? `${propertyResidentData.residents.length} Resident${propertyResidentData.residents.length > 1 ? 's' : ''}` 
+                    : 'Vacant';
+                
+                // Get resident names for display
+                let residentNames = '';
+                if (propertyResidentData && propertyResidentData.residents && propertyResidentData.residents.length > 0) {
+                    const residentList = propertyResidentData.residents.filter(r => r.type === 'resident');
+                    if (residentList.length > 0) {
+                        residentNames = residentList.map(r => {
+                            const name = [r.firstName, r.middleName, r.lastName].filter(Boolean).join(' ');
+                            return name;
+                        }).join(', ');
+                    }
+                }
+                
+                // Get lease and financial details
+                const monthlyRent = propertyResidentData?.monthlyRent || '';
+                const deposit = propertyResidentData?.deposit || '';
+                const leaseLength = propertyResidentData?.leaseLength || '';
+                const leaseStartDate = propertyResidentData?.leaseStartDate || '';
+                const leaseEndDate = propertyResidentData?.leaseEndDate || '';
                 
                 propertyCard.innerHTML = `
                     <!-- Property Header -->
@@ -473,17 +562,32 @@
                     <!-- Property Sections -->
                     <div class="space-y-4">
                         <!-- Residents Section -->
-                        <div class="flex items-center justify-between py-3">
-                            <div class="flex items-center gap-3">
-                                <iconify-icon icon="lucide:user" width="20" class="text-zinc-500"></iconify-icon>
-                                <div>
-                                    <span class="text-sm font-medium text-zinc-900">Residents</span>
-                                    <p class="text-xs text-zinc-500 mt-0.5">${residentStatus}</p>
+                        <div class="border-b border-zinc-100 pb-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <iconify-icon icon="lucide:user" width="20" class="text-zinc-500"></iconify-icon>
+                                    <div>
+                                        <span class="text-sm font-medium text-zinc-900">Residents</span>
+                                        <p class="text-xs text-zinc-500 mt-0.5">${residentStatus}</p>
+                                    </div>
                                 </div>
+                                <button onclick="window.location.href='set-up-residents.html?propertyId=${listing.id}'" class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
+                                    ${propertyResidentData ? 'Edit' : 'Set up'} resident or payment
+                                </button>
                             </div>
-                            <button onclick="window.location.href='set-up-residents.html?propertyId=${listing.id}'" class="px-4 py-1.5 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
-                                Set up resident or payment
-                            </button>
+                            ${propertyResidentData && propertyResidentData.residents && propertyResidentData.residents.length > 0 ? `
+                                <div class="ml-8 space-y-2">
+                                    ${propertyResidentData.residents.filter(r => r.type === 'resident').map(resident => {
+                                        const name = [resident.firstName, resident.middleName, resident.lastName].filter(Boolean).join(' ');
+                                        return `<p class="text-sm text-zinc-700">${name}</p>`;
+                                    }).join('')}
+                                    ${monthlyRent ? `<p class="text-sm text-zinc-600 mt-2"><span class="font-medium">Monthly Rent:</span> $${parseFloat(monthlyRent).toLocaleString()}</p>` : ''}
+                                    ${deposit ? `<p class="text-sm text-zinc-600"><span class="font-medium">Deposit:</span> $${parseFloat(deposit).toLocaleString()}</p>` : ''}
+                                    ${leaseLength ? `<p class="text-sm text-zinc-600"><span class="font-medium">Lease Length:</span> ${leaseLength} Months</p>` : ''}
+                                    ${leaseStartDate ? `<p class="text-sm text-zinc-600"><span class="font-medium">Lease Start:</span> ${new Date(leaseStartDate).toLocaleDateString()}</p>` : ''}
+                                    ${leaseEndDate ? `<p class="text-sm text-zinc-600"><span class="font-medium">Lease End:</span> ${new Date(leaseEndDate).toLocaleDateString()}</p>` : ''}
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
                 `;
